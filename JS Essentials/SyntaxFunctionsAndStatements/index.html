@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function matrixToJSON(input){
+          
+		  let city = {};
+		  for(let j = 0 ; j < input.length ; j++){
+	
+			
+			input[j] = input[j].split(/ <-> /);
+			if(city[input[j][0]]){
+				city[input[j][0]]+=Number(input[j][1]);
+				continue;
+			}
+			city[input[j][0]]=Number(input[j][1]);
+		
+			
+			
+		  }
+			let keys = Object.keys(city);
+			for(let key of keys){
+			console.log(`${key} : ${city[key]}`);
+			}
+			
+		  
+		 
+        }
+        matrixToJSON(["Sofia <-> 1200000","Montana <-> 20000","New York <-> 10000000","Washington <-> 2345000","Las Vegas <-> 1000000"]);
+    </script>
+</body>
+</html>
