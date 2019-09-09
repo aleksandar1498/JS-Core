@@ -8,17 +8,20 @@
 </head>
 <body>
     <script>
-      function findEvenElements(arr){
-	let evenElements = [] ;
-	for(let i = 0 ; i < arr.length ; i++){
-		if(i%2 == 0){
-			evenElements.push(Number(arr[i]));
+      function splitterNegativePositive(arr){
+		
+		let newArr = [] ;
+		for(const element of arr){
+			if(element < 0){
+				newArr.unshift(element);
+			}else{
+				newArr.push(element);
+			}
 		}
-	}
-	console.log(evenElements);
+		console.log(newArr.join("\n"));
 	}
 
-	findEvenElements(['20','30','40']); 
+	splitterNegativePositive([7,-2,8,9]); 
 	</script>
 	</script>
 </body>
