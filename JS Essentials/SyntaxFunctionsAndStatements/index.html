@@ -8,31 +8,18 @@
 </head>
 <body>
     <script>
-        function matrixToJSON(input){
-          
-		  let city = {};
-		  for(let j = 0 ; j < input.length ; j++){
-	
-			
-			input[j] = input[j].split(/ <-> /);
-			if(city[input[j][0]]){
-				city[input[j][0]]+=Number(input[j][1]);
-				continue;
-			}
-			city[input[j][0]]=Number(input[j][1]);
-		
-			
-			
-		  }
-			let keys = Object.keys(city);
-			for(let key of keys){
-			console.log(`${key} : ${city[key]}`);
-			}
-			
-		  
-		 
-        }
-        matrixToJSON(["Sofia <-> 1200000","Montana <-> 20000","New York <-> 10000000","Washington <-> 2345000","Las Vegas <-> 1000000"]);
-    </script>
+      function findEvenElements(arr){
+	let evenElements = [] ;
+	for(let i = 0 ; i < arr.length ; i++){
+		if(i%2 == 0){
+			evenElements.push(Number(arr[i]));
+		}
+	}
+	console.log(evenElements);
+	}
+
+	findEvenElements(['20','30','40']); 
+	</script>
+	</script>
 </body>
 </html>
