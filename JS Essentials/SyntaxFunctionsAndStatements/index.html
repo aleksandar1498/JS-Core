@@ -8,26 +8,33 @@
 </head>
 <body>
     <script>
-      function sumOfElements(n,k){
-
-		let newArr = [1] ;
-		let sum = [1,2,3].reduce((a,c) => a+c,0);
+      function equalNeighbors(matrix){
+		let equalNeighbor = 0;
 		
-		for(let i = 1 ; i < n ; i++){
-			let start = -1;
-			if(i-k < 0){
-				start = 0;
-			}else{
-				start = i-k;
+		for(let i = 0 ; i < matrix.length ; i++){
+			for(let j = 0 ; j < matrix[i].length; j++){
+				if(j+1 < matrix[i].length && matrix[i][j] == matrix[i][j+1]){
+					equalNeighbor++;
+				}
+				
+				
+				if(i+1 < matrix.length && matrix[i][j] == matrix[i+1][j]){
+					equalNeighbor++;
+				}
+				
 			}
-
-			newArr.push(newArr.slice(start,i).reduce((a,c) => a+c ,0));
-		
+			
 		}
-		console.log(newArr.join(" "));
+		console.log(equalNeighbor);
 	}
 
-	sumOfElements(8,2); 
+	equalNeighbors([
+			['2', '3', '4', '7','0'],
+			['4', '0', '5', '3','4'],
+			['2', '3', '5', '4','2'],
+			['9', '8', '7', '5','4']
+]
+); 
 	</script>
 	</script>
 </body>
