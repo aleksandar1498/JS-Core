@@ -8,20 +8,26 @@
 </head>
 <body>
     <script>
-      function splitterNegativePositive(arr){
+      function sumOfElements(n,k){
+
+		let newArr = [1] ;
+		let sum = [1,2,3].reduce((a,c) => a+c,0);
 		
-		let newArr = [] ;
-		for(const element of arr){
-			if(element < 0){
-				newArr.unshift(element);
+		for(let i = 1 ; i < n ; i++){
+			let start = -1;
+			if(i-k < 0){
+				start = 0;
 			}else{
-				newArr.push(element);
+				start = i-k;
 			}
+
+			newArr.push(newArr.slice(start,i).reduce((a,c) => a+c ,0));
+		
 		}
-		console.log(newArr.join("\n"));
+		console.log(newArr.join(" "));
 	}
 
-	splitterNegativePositive([7,-2,8,9]); 
+	sumOfElements(8,2); 
 	</script>
 	</script>
 </body>
