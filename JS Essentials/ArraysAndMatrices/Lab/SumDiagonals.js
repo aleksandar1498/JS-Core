@@ -11,3 +11,4 @@ function diagonalSum(matrix){
 			sumSecondDiagonal+=matrix[i][k];
 			k--;
 		}
+	}
