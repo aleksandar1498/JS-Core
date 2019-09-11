@@ -1,41 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <script>
-      function equalNeighbors(matrix){
-		let equalNeighbor = 0;
-		
-		for(let i = 0 ; i < matrix.length ; i++){
-			for(let j = 0 ; j < matrix[i].length; j++){
-				if(j+1 < matrix[i].length && matrix[i][j] == matrix[i][j+1]){
-					equalNeighbor++;
-				}
-				
-				
-				if(i+1 < matrix.length && matrix[i][j] == matrix[i+1][j]){
-					equalNeighbor++;
-				}
-				
-			}
-			
-		}
-		console.log(equalNeighbor);
-	}
 
-	equalNeighbors([
-			['2', '3', '4', '7','0'],
-			['4', '0', '5', '3','4'],
-			['2', '3', '5', '4','2'],
-			['9', '8', '7', '5','4']
-]
-); 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		function printEveryNthElement(arr) {
+			let step = Number(arr[arr.length - 1]);
+			for (let i = 0; i < arr.length - 1; i+=step) {
+				console.log(arr[i]);
+			}
+		}
+
+		printEveryNthElement(['5',
+			'20',
+			'31',
+			'4',
+			'20',
+			'2']
+		); 
 	</script>
 	</script>
 </body>
+
 </html>
