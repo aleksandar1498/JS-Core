@@ -40,6 +40,4 @@ function solve() {
     res.appendChild(pN);
     res.appendChild(pE);
     res.appendChild(pM);
-    
-
 }
