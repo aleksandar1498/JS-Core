@@ -27,7 +27,7 @@ minutesBtn.addEventListener("click",function(ev){
 
 secondsBtn.addEventListener("click",function(ev){
 	let seconds = Number(ev.target.previousElementSibling.value);
-	daysBtn.previousElementSibling.value = (seconds / (3600*24)).toFixed(0);
+	daysBtn.previousElementSibling.value = (seconds / (3600*24));
 	hoursBtn.previousElementSibling.value = (seconds / 3600).toFixed(0);
 	minutesBtn.previousElementSibling.value = (seconds / 60).toFixed(0);
 	
