@@ -10,55 +10,12 @@
 
 <body>
 	<script>
-		function diagonalAttack(matrix) {
-			for (let i = 0; i < matrix.length; i++) {
-				matrix[i] = matrix[i].split(/\s+/g).map(x => Number(x));
-			}
-			let sumFirstDiagonal = 0;
-			let sumSecondDiagonal = 0;
-			let k = matrix[0].length - 1;
-			for (let i = 0; i < matrix.length; i++) {
-				for (let j = 0; j < matrix[i].length; j++) {
-					if (i == j) {
-						sumFirstDiagonal += matrix[i][j];
-					}
-				}
-				sumSecondDiagonal += matrix[i][k];
-				k--;
-			}
-
-
-			if (sumFirstDiagonal == sumSecondDiagonal) {
-				k = matrix[0].length - 1;
-				for (let i = 0; i < matrix.length; i++) {
-					for (let j = 0; j < matrix[i].length; j++) {
-						if (i != j && i != k) {
-							matrix[i][j] = sumFirstDiagonal;
-						}
-					}
-
-					k--;
-				}
-				printMatrix(matrix);
-			} else {
-				printMatrix(matrix);
-				
-			}
-
-			function printMatrix(matrix) {
-				for (const row of matrix) {
-					console.log(row.join(" "));
-				}
+		function square(size) {
+			for (let i = 0; i < size; i++) {
+				console.log('*'.repeat(size).split("").join(" "));
 			}
 		}
-
-		diagonalAttack(['5 3 12 3 1',
-			'11 4 23 2 5',
-			'101 12 3 21 10',
-			'1 4 5 2 2',
-			'5 22 33 11 1']);
-
-
+		console.log(square(2));
 	</script>
 </body>
 
