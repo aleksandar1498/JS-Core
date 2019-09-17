@@ -1,18 +1,58 @@
-  <script>
-  function scoreToHTML(score){
-	let data = JSON.parse(score);
-	console.log("<table>");
-	console.log(`  <tr><th>name<\/th><th>score<\/th><\/tr>`);
-	for(const info of data){
-	
-		console.log(` <tr><td>${escapeHtml(info.name)}<\/td><td>${escapeHtml(info.score)}<\/td><\/tr>`);
-	}
-	console.log("</table>");
-	function escapeHtml(text) {
-		return (text+"").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-	}
-	
-  }
-  scoreToHTML('[{"name":"Pesho & Kiro","score":479},{"name":"Gosho, Maria & Viki","score":205}]');
-
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FromJSONToHTMLTable</title>
+    <style>
+        table,th{
+            border: groove;
+            border-collapse: collapse;
+        }
+        td{
+            border: 1px solid black;
+        }
+        td,th{
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+    </div>
+    <script>
+        function fromJSONToHTMLTable(input){
+			let data = JSON.parse(input);
+			let output="<table>";
+			
+			let first = true;
+			for(const info of data){
+				let keys = Object.keys(info);
+				if(first){
+				output+="\n<tr>";
+				for(const key of keys){
+					output+="<th>"+key+"<\/th>";
+				}
+				output+="<\/tr>";
+				first = false;
+				}
+				
+				output+="\n<tr>";
+				for(const key of keys){
+					output+="<td>"+escapeHtml(info[key])+"<\/td>";
+				}
+				output+="<\/tr>";
+			}
+			output+="\n</table>";
+			
+			return output;
+			function escapeHtml(text) {
+				return (text+"").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+			}
+        }
+        window.onload = function(){
+            let container = document.getElementById('wrapper');
+            container.innerHTML = fromJSONToHTMLTable(['[{"Name":"Tomatoes & Chips","Price":2.35},{"Name":"J&B Chocolate","Price":0.96}]']);
+        };
+    </script>
+</body>
+</html>
