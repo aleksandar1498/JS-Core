@@ -20,39 +20,19 @@
     <div id="wrapper">
     </div>
     <script>
-        function fromJSONToHTMLTable(input){
-			let data = JSON.parse(input);
-			let output="<table>";
-			
-			let first = true;
-			for(const info of data){
-				let keys = Object.keys(info);
-				if(first){
-				output+="\n<tr>";
-				for(const key of keys){
-					output+="<th>"+key+"<\/th>";
+        function sumByTown(input){
+			let towns = {};
+			for(let i=0;i<input.length;i+=2){
+				if(towns[input[i]]){
+					towns[input[i]]=towns[input[i]]+Number(input[i+1]);
+				}else{
+					towns[input[i]]=Number(input[i+1]);
 				}
-				output+="<\/tr>";
-				first = false;
-				}
-				
-				output+="\n<tr>";
-				for(const key of keys){
-					output+="<td>"+escapeHtml(info[key])+"<\/td>";
-				}
-				output+="<\/tr>";
 			}
-			output+="\n</table>";
-			
-			return output;
-			function escapeHtml(text) {
-				return (text+"").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-			}
+			console.log(JSON.stringify(towns));
         }
-        window.onload = function(){
-            let container = document.getElementById('wrapper');
-            container.innerHTML = fromJSONToHTMLTable(['[{"Name":"Tomatoes & Chips","Price":2.35},{"Name":"J&B Chocolate","Price":0.96}]']);
-        };
+		sumByTown(['Sofia','20','Varna','3','Sofia','5','Varna','4']);
+       
     </script>
 </body>
 </html>
