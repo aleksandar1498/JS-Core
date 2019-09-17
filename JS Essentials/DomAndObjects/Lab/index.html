@@ -1,38 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>FromJSONToHTMLTable</title>
     <style>
-        table,th{
+        table,
+        th {
             border: groove;
             border-collapse: collapse;
         }
-        td{
+
+        td {
             border: 1px solid black;
         }
-        td,th{
+
+        td,
+        th {
             padding: 5px;
         }
     </style>
 </head>
+
 <body>
     <div id="wrapper">
     </div>
     <script>
-        function sumByTown(input){
-			let towns = {};
-			for(let i=0;i<input.length;i+=2){
-				if(towns[input[i]]){
-					towns[input[i]]=towns[input[i]]+Number(input[i+1]);
-				}else{
-					towns[input[i]]=Number(input[i+1]);
-				}
-			}
-			console.log(JSON.stringify(towns));
+        function cityMarkets(cities) {
+            let cityMarkets = {};
+
+            for (let city of cities) {
+
+                city = city.split(/ -> /g);
+                let cityName = city[0];
+                let product = city[1];
+                let productData = city[2].split(/ : /g);
+
+                if (cityMarkets[cityName]) {
+                    if (cityMarkets[cityName][product]) {
+                        cityMarkets[cityName][product]["amount"] = cityMarkets[cityName][product]["amount"] + productData[0];
+                    } else {
+                        cityMarkets[cityName][product] = {};
+                        cityMarkets[cityName][product]["amount"] = Number(productData[0]);
+                        cityMarkets[cityName][product]["price"] = Number(productData[1]);
+                    }
+                } else {
+
+
+
+                    cityMarkets[cityName] = {};
+                    cityMarkets[cityName][product] = {};
+                    cityMarkets[cityName][product]["amount"] = Number(productData[0]);
+                    cityMarkets[cityName][product]["price"] = Number(productData[1]);
+
+
+                }
+
+            }
+            const cityKeys = Object.keys(cityMarkets);
+            for (const key of cityKeys) {
+                
+                console.log(`Town - ${key}`);
+                const prodKeys = Object.keys(cityMarkets[key]);
+                for (prod of prodKeys) {
+                    console.log(`$$${prod} : ${cityMarkets[key][prod]["price"]*cityMarkets[key][prod]["amount"]}`);
+                }
+                
+            }
+
+
         }
-		sumByTown(['Sofia','20','Varna','3','Sofia','5','Varna','4']);
-       
+        cityMarkets(['Sofia -> Laptops HP -> 200 : 2000',
+            'Sofia -> Raspberry -> 200000 : 1500',
+            'Sofia -> Audi Q7 -> 200 : 100000',
+            'Montana -> Portokals -> 200000 : 1',
+            'Montana -> Qgodas -> 20000 : 0.2',
+            'Montana -> Chereshas -> 1000 : 0.3']);
     </script>
 </body>
+
 </html>
