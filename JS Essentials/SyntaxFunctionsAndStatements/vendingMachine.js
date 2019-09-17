@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
-</head>
-
-<body>
-	<script>
-		function complete(orders) {
+function complete(orders) {
 			let totIncome = 0;
 			
 			for(let order of orders){
@@ -52,9 +40,3 @@
 			}
 			console.log(`Income Report: $${totIncome.toFixed(2)}`);
 		}
-		complete(['1.00, coffee, caffeine, milk, 4', '0.40, tea, milk, 2', '1.00, coffee, decaf, 0']);
-	
-	</script>
-</body>
-
-</html>

@@ -9,7 +9,6 @@ function encodeAndDecodeMessages() {
 	buttons[1].addEventListener('click',function(ev){
 		
 		let textToDecode = textareas[1].value;
-		console.log(textToDecode);
 		textareas[1].value = decodeText(textToDecode);
 	});
 	
