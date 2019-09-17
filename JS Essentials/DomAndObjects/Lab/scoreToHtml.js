@@ -1,5 +1,4 @@
-  <script>
-  function scoreToHTML(score){
+function scoreToHTML(score){
 	let data = JSON.parse(score);
 	console.log("<table>");
 	console.log(`  <tr><th>name<\/th><th>score<\/th><\/tr>`);
@@ -13,6 +12,3 @@
 	}
 	
   }
-  scoreToHTML('[{"name":"Pesho & Kiro","score":479},{"name":"Gosho, Maria & Viki","score":205}]');
-
-</script>
