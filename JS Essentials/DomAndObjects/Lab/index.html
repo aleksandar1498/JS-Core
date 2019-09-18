@@ -26,19 +26,28 @@
     <div id="wrapper">
     </div>
     <script>
-        function extractUnique(lorem) {
-			let words = {};
-			for(let sentence of lorem){
-				sentence = sentence.toLowerCase().replace(/[^A-Za-z0-9 ]+/g,"").split(/\s+/g);
-				for(const word of sentence){
-						words[word+""] = "as";
+        function heroicInventory(data) {
+			let heroes = [];
+			for(let entry of data){
+				entry = entry.split(/ \/ /g);
+				let name = entry[0];
+				let level = Number(entry[1]);
+				let items = [];
+				if(entry.length > 2){
+				  items = entry[2].split(/, /g);
 				}
 				
+				let hero = {};
+				hero["name"] = name;
+				hero["level"] = level;
+				hero["items"] = items;
+				heroes.push(hero);
 			}
-			console.log(Object.keys(words).join(", "));
+			console.log(JSON.stringify(heroes));
         }
-        extractUnique(['Lorem lorem Lorem ssa. ssa']
-
+        heroicInventory(['Isacc / 25 / Apple, GravityGun',
+'Derek / 12 / BarrelVest, DestructionSword',
+'Hes / 1 / Desolator, Sentinel, Antara']
 );
     </script>
 </body>
