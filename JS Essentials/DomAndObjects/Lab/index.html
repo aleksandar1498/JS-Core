@@ -26,56 +26,55 @@
     <div id="wrapper">
     </div>
     <script>
-        function cityMarkets(cities) {
-            let cityMarkets = {};
-
-            for (let city of cities) {
-
-                city = city.split(/ -> /g);
-                let cityName = city[0];
-                let product = city[1];
-                let productData = city[2].split(/ : /g);
-
-                if (cityMarkets[cityName]) {
-                    if (cityMarkets[cityName][product]) {
-                        cityMarkets[cityName][product]["amount"] = cityMarkets[cityName][product]["amount"] + productData[0];
-                    } else {
-                        cityMarkets[cityName][product] = {};
-                        cityMarkets[cityName][product]["amount"] = Number(productData[0]);
-                        cityMarkets[cityName][product]["price"] = Number(productData[1]);
-                    }
-                } else {
-
-
-
-                    cityMarkets[cityName] = {};
-                    cityMarkets[cityName][product] = {};
-                    cityMarkets[cityName][product]["amount"] = Number(productData[0]);
-                    cityMarkets[cityName][product]["price"] = Number(productData[1]);
-
-
-                }
-
-            }
-            const cityKeys = Object.keys(cityMarkets);
-            for (const key of cityKeys) {
-                
-                console.log(`Town - ${key}`);
-                const prodKeys = Object.keys(cityMarkets[key]);
-                for (prod of prodKeys) {
-                    console.log(`$$${prod} : ${cityMarkets[key][prod]["price"]*cityMarkets[key][prod]["amount"]}`);
-                }
-                
-            }
-
+        function lowestPricePerProduct(cities) {
+           let products = {};
+		   for(let city of cities){
+			city = city.split(/ \| /g);
+			let cityName = city[0];
+			let product = city[1];
+			let price = Number(city[2]);
+			if(products[product]){
+				if(products[product][cityName]){
+					products[product][cityName]["price"] = price;
+				}else{
+					products[product][cityName]= {};
+					products[product][cityName]["price"] = price;
+				}
+			}else{
+				products[product] = {};
+				products[product][cityName]= {};
+				products[product][cityName]["price"] = price;
+			}
+		   }
+		   
+		   const productNames = Object.keys(products);
+		   for(const key of productNames){
+			let cheaperCity = Object.entries(products[key]).sort((a,b) => {
+				//console.log(a[1]['price'],b[1]['price'])
+				return a[1]['price'] - b[1]['price'];
+			})[0];
+			
+			console.log(`${key} -> ${cheaperCity[1]["price"]} (${cheaperCity[0]})`);
+			
+			
+		   }
+		   
 
         }
-        cityMarkets(['Sofia -> Laptops HP -> 200 : 2000',
-            'Sofia -> Raspberry -> 200000 : 1500',
-            'Sofia -> Audi Q7 -> 200 : 100000',
-            'Montana -> Portokals -> 200000 : 1',
-            'Montana -> Qgodas -> 20000 : 0.2',
-            'Montana -> Chereshas -> 1000 : 0.3']);
+        lowestPricePerProduct([
+			'Sofia City | Audi | 100000',
+			'Sofia City | BMW | 100000',
+			'Sofia City | Mitsubishi | 10000',
+			'Sofia City | Mercedes | 10000',
+			'Sofia City | NoOffenseToCarLovers | 0',
+			'Mexico City | Audi | 1000',
+			'Mexico City | BMW | 99999',
+			'New York City | Mitsubishi | 10000',
+			'New York City | Mitsubishi | 1000',
+			'Mexico City | Audi | 100000',
+			'Washington City | Mercedes | 1000'
+		]
+);
     </script>
 </body>
 
