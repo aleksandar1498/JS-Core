@@ -1,32 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>FromJSONToHTMLTable</title>
-    <style>
-        table,
-        th {
-            border: groove;
-            border-collapse: collapse;
-        }
-
-        td {
-            border: 1px solid black;
-        }
-
-        td,
-        th {
-            padding: 5px;
-        }
-    </style>
-</head>
-
-<body>
-    <div id="wrapper">
-    </div>
-    <script>
-        function cappyJuice(input){
+ function cappyJuice(input){
 			let notBottledJuices = {};
 			let bottledJuice = {};
 			for(let entry of input){
@@ -54,13 +26,3 @@
 			}
 			
 		}
-        cappyJuice(['Orange => 2000',
-'Peach => 1432',
-'Banana => 450',
-'Peach => 600',
-'Strawberry => 549']
-);
-    </script>
-</body>
-
-</html>
