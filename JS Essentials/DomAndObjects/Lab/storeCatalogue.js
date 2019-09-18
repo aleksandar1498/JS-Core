@@ -1,32 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>FromJSONToHTMLTable</title>
-    <style>
-        table,
-        th {
-            border: groove;
-            border-collapse: collapse;
-        }
-
-        td {
-            border: 1px solid black;
-        }
-
-        td,
-        th {
-            padding: 5px;
-        }
-    </style>
-</head>
-
-<body>
-    <div id="wrapper">
-    </div>
-    <script>
-        function catalogue(input){
+ function catalogue(input){
 			let dictionary = {};
 			for(let entry of input){
 				entry = entry.split(/ : /g);
@@ -50,17 +22,3 @@
 			}
 			
 		}
-        catalogue(['Appricot : 20.4',
-'Fridge : 1500',
-'TV : 1499',
-'Deodorant : 10',
-'Boiler : 300',
-'Apple : 1.25',
-'Anti-Bug Spray : 15',
-'T-Shirt : 10']
-
-);
-    </script>
-</body>
-
-</html>
