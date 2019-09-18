@@ -26,54 +26,19 @@
     <div id="wrapper">
     </div>
     <script>
-        function lowestPricePerProduct(cities) {
-           let products = {};
-		   for(let city of cities){
-			city = city.split(/ \| /g);
-			let cityName = city[0];
-			let product = city[1];
-			let price = Number(city[2]);
-			if(products[product]){
-				if(products[product][cityName]){
-					products[product][cityName]["price"] = price;
-				}else{
-					products[product][cityName]= {};
-					products[product][cityName]["price"] = price;
+        function extractUnique(lorem) {
+			let words = {};
+			for(let sentence of lorem){
+				sentence = sentence.toLowerCase().replace(/[^A-Za-z0-9 ]+/g,"").split(/\s+/g);
+				for(const word of sentence){
+						words[word+""] = "as";
 				}
-			}else{
-				products[product] = {};
-				products[product][cityName]= {};
-				products[product][cityName]["price"] = price;
+				
 			}
-		   }
-		   
-		   const productNames = Object.keys(products);
-		   for(const key of productNames){
-			let cheaperCity = Object.entries(products[key]).sort((a,b) => {
-				//console.log(a[1]['price'],b[1]['price'])
-				return a[1]['price'] - b[1]['price'];
-			})[0];
-			
-			console.log(`${key} -> ${cheaperCity[1]["price"]} (${cheaperCity[0]})`);
-			
-			
-		   }
-		   
-
+			console.log(Object.keys(words).join(", "));
         }
-        lowestPricePerProduct([
-			'Sofia City | Audi | 100000',
-			'Sofia City | BMW | 100000',
-			'Sofia City | Mitsubishi | 10000',
-			'Sofia City | Mercedes | 10000',
-			'Sofia City | NoOffenseToCarLovers | 0',
-			'Mexico City | Audi | 1000',
-			'Mexico City | BMW | 99999',
-			'New York City | Mitsubishi | 10000',
-			'New York City | Mitsubishi | 1000',
-			'Mexico City | Audi | 100000',
-			'Washington City | Mercedes | 1000'
-		]
+        extractUnique(['Lorem lorem Lorem ssa. ssa']
+
 );
     </script>
 </body>
