@@ -1,0 +1,18 @@
+function orderedUniqueArrays(arrays) {
+        let set = new Set();
+        for (let array of arrays) {
+            array = JSON.parse(array);
+			array.sort((a,b) => {
+			return b-a
+			});
+			set.add(array.join(" "));
+			
+        }
+		let result = Array.from(set.values()).map(entry => entry.split(" ").map(a => Number(a)));
+		result.sort((a,b) =>{
+			return a.length - b.length;
+		}).forEach(array => {
+			console.log("["+array.join(", ")+"]");
+		});
+       
+    }

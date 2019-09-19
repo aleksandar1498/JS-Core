@@ -1,7 +1,4 @@
-<script>
-
-
-    function arena(input){
+function arena(input){
 			let soldiers = {};
 			for(let action of input){
 				if(action == "Ave Cesar"){
@@ -76,17 +73,3 @@
 				
 			}
 		}
-        arena(
-		[
-			'Pesho -> Duck -> 400',
-			'Julius -> Shield -> 150',
-			'Gladius -> Heal -> 200',
-			'Gladius -> Support -> 250',
-			'Gladius -> Shield -> 250',
-			'Pesho vs Gladius',
-			'Gladius vs Julius',
-			'Gladius vs Gosho',
-			'Ave Cesar'
-
-		]);
-</script>
