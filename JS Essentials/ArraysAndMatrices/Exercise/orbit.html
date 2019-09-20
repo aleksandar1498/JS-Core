@@ -1,0 +1,82 @@
+<script>
+function generateOrbit(width, height, r, c){
+    let orbit = initializeOrbit(width,height);
+    let val = 1;
+    let dis = 1;
+    orbit[r][c] = val;
+    
+    
+   while(true){
+        val++;
+        let filled = false;
+        //right
+        if(isInLimit(orbit,r,c+dis)){
+            orbit[r][c+dis] = val;
+            filled = true;
+        }
+        //right-down
+        if(isInLimit(orbit,r+dis,c+dis)){
+            orbit[r+dis][c+dis] = val;
+            filled = true;
+        }
+        //down
+        if(isInLimit(orbit,r+dis,c)){
+            orbit[r+dis][c] = val;
+            filled = true;
+        }
+        //left-down
+        if(isInLimit(orbit,r+dis,c-dis)){
+            orbit[r+dis][c-dis] = val;
+            filled = true;
+        }
+        //left
+        if(isInLimit(orbit,r,c-dis)){
+            orbit[r][c-dis] = val;
+            filled = true;
+        }
+        //top-left
+        if(isInLimit(orbit,r-dis,c-dis)){
+            orbit[r-dis][c-dis] = val;
+            filled = true;
+        }
+        //top
+        if(isInLimit(orbit,r-dis,c)){
+            orbit[r-dis][c] = val;
+            filled = true;
+        }
+        //top-right
+        if(isInLimit(orbit,r-dis,c+dis)){
+            orbit[r-dis][c+dis] = val;
+            filled = true;
+        }
+        dis++;
+        if(filled == false){
+            break;
+        }
+    }
+    printOrbit(orbit);
+    
+
+
+    function isInLimit(orbit,r,c){
+        return ((r >= 0 && r < orbit.length) && (c >= 0 && c < orbit[r].length));
+    }
+    function printOrbit(orbit){
+        for (let x = 0; x < orbit.length; x++) {
+            console.log(orbit[x].join("  "));
+            
+        }
+    }
+    function initializeOrbit(width, height){
+        let orbit = [];
+        orbit.length = width;
+        for (let i = 0; i < orbit.length; i++) {
+           orbit[i] = [];
+           orbit[i].length = height; 
+        }
+       return orbit;
+    }
+   
+}
+generateOrbit(4,4,1,1);
+</script>
