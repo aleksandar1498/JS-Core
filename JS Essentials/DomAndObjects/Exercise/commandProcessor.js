@@ -1,4 +1,3 @@
-<script>
 function commandProcessor(){
 	let str = "";
 	return {
@@ -8,14 +7,3 @@ function commandProcessor(){
 		print : () => console.log(str)
 	}
 }
-
-let firstZeroTest = commandProcessor();
-
-firstZeroTest.append('hello');
-firstZeroTest.append('again');
-firstZeroTest.removeStart(3);
-firstZeroTest.print();
-firstZeroTest.removeEnd(4);
-firstZeroTest.print();
-
-</script>
