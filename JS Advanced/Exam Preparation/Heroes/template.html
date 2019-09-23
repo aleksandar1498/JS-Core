@@ -49,12 +49,12 @@
                 </section>
                 <section id="actions">
                     <img src="images/attack.png" />
-                    <input type="text" placeholder="Attacker..." />
-                    <input type="text" placeholder="Defender..." />
+                    <input type="text" value ="castle" placeholder="Attacker..." />
+                    <input type="text" value = "dungeon" placeholder="Defender..." />
                     <button>Attack</button>
                 </section>
                 <section id="map">
-                    <div class="kingdom" id="castle" style="display: none"></div>
+                    <div class="kingdom" id="castle" style="display: none;"></div>
                     <div class="kingdom" id="dungeon" style="display: none"></div>
                     <div class="kingdom" id="fortress" style="display: none"></div>
                     <div class="kingdom" id="inferno" style="display: none"></div>
@@ -69,6 +69,35 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="scripts/solution.js"></script>
+    <script>  
+        $("#kingdom input[placeholder='Kingdom...']").val("dungeon");
+        $("#kingdom input[placeholder='King...']").val("dungeon-king");
+        $("#kingdom button").click();
+        
+        $("input[value='tank']").click();
+        $("input[placeholder='Character...']").val("1tank");
+        $("input[placeholder='Kingdom...']")[1].value = "dungeon";
+        $("#characters button").click();
+        
+        $("#kingdom input[placeholder='Kingdom...']").val("rampart");
+        $("#kingdom input[placeholder='King...']").val("ranpart-king");
+        $("#kingdom button").click();
+        
+        $("input[value='fighter']").click();
+        $("input[placeholder='Character...']").val("1fighter");
+        $("input[placeholder='Kingdom...']")[1].value = "rampart";
+        $("#characters button").click();
+        
+        $("input[value='fighter']").click();
+        $("input[placeholder='Character...']").val("2fighter");
+        $("input[placeholder='Kingdom...']")[1].value = "rampart";
+        $("#characters button").click();
+        
+        $("#actions input[placeholder='Attacker...']").val("rampart");
+        $("#actions input[placeholder='Defender...']").val("dungeon");
+        
+        $("#actions button").click();
+        </script>
 </body>
 
 </html>
