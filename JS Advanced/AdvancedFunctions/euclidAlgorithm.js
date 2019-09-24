@@ -1,4 +1,3 @@
-<script>
 function euclid(a,b){
 	let r = 0;
 	while (b > 0)
@@ -11,6 +10,3 @@ function euclid(a,b){
 
 	return a;
 }
-console.log(euclid(252,105));
-
-</script>
