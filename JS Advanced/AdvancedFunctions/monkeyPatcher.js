@@ -1,4 +1,3 @@
-<script>
 let post = {
     id: '1234',
     author: 'author name',
@@ -58,18 +57,3 @@ let solution = (function(){
 		
 	}
 })();
-let score = solution.call(post, 'score'); // [127, 127, 0, 'controversial']
-solution.call(post, 'downvote');
-
-
-solution.call(post, 'upvote');
-solution.call(post, 'upvote');
-for (let i = 0; i < 38; i++) {
-    solution.call(post, 'upvote');
-}
-solution.call(post, 'downvote');
-post.upvotes = 132;
-post.downvotes = 68;
-score = solution.call(post, 'score');
-console.log(score);
-</script>
