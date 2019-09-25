@@ -1,17 +1,19 @@
-<script>
+
 //rado3000
 class Computer {
    constructor (ramMemory,cpuGHz,hddMemory){
 	this.ramMemory = ramMemory;
 	this.cpuGHz = cpuGHz;
 	this.hddMemory = hddMemory;
+	this.totalRamUsage = 0;
+    this.totalCpuUsage = 0;
 	this.taskManager = [];
 	this.installedPrograms = [];
    }
    
    installAProgram(name, requiredSpace){
 	   if(requiredSpace > this.hddMemory){
-			return "There is not enough space on the hard drive";
+			throw new Error("There is not enough space on the hard drive");
 	   }
 	   let program = {
 			name : name,
@@ -22,17 +24,13 @@ class Computer {
 	   return program;
    }
    uninstallAProgram(name){
-	   
-	   if(this.isInstalled(name) == false){
-		   return "Control panel is not responding";
+	const findProgram = this.installedPrograms.find((p) => p.name === name);
+	   if(findProgram == false){
+		throw new Error("Control panel is not responding");
 	   }
-	   for(let i=0;i< this.installedPrograms.length;i++){
-		   if(this.installedPrograms[i]['name'] == name){
-			   this.increaseHddMemory(this.installedPrograms[i]['requiredSpace']);
-			   this.installedPrograms.splice(i,1);
-			   break;
-		   }
-	   }
+	   let indexProgram = this.installedPrograms.findIndex(p => p.name === name);
+	   this.installedPrograms.splice(indexProgram,1);
+	   this.increaseHddMemory(findProgram.requiredSpace);
 	   return this.installedPrograms;
    }
   
@@ -41,31 +39,29 @@ class Computer {
    openAProgram(name){
    console.log(name);
 		if(this.isInstalled(name) == false){
-		   return `The ${name} is not recognized`;
+			throw new Error( `The ${name} is not recognized`);
 		}
-		console.log(name);
 		if(this.isOpened(name)){
-			return `The ${name} is already open`;
+			throw new Error(`The ${name} is already open`);
 		}
-		console.log(name);
 		let program = this.installedPrograms.find(p => p['name'] == name);
-		console.log(program);
 		let ramUsage = (program['requiredSpace'] / this.ramMemory) * 1.5;
 		let cpuUsage = ((program['requiredSpace'] / this.cpuGHz)/500) * 1.5;
+		this.totalRamUsage+=ramUsage;
+		this.totalCpuUsage+=cpuUsage;
+		if(this.totalRamUsage >= 100){
+			throw new Error(`${name} caused out of memory exception`);
+		}
+		if(this.totalCpuUsage >= 100){
+			throw new Error(`${name} caused out of cpu exception`);
+		}
 		let programOpened = {
 			name : name,
 			ramUsage : ramUsage,
 			cpuUsage : cpuUsage,
 		}
-		console.log(name);
-		
 		this.taskManager.push(programOpened);
-		if(this.totMemoryUsage() >= 100){
-		 return `${name} caused out of memory exception`;
-		}
-		if(this.totCpuUsage() >= 100){
-			return `${name} caused out of cpu exception`;
-		}
+		
 		return programOpened;
    }
    
@@ -73,11 +69,10 @@ class Computer {
 	if(this.taskManager.length == 0){
 		return "All running smooth so far";
 	}
-	let result = '';
-	for(const program of this.taskManager){
-		result+=`\nName - ${program['name']} | Usage - CPU: ${program['cpuUsage']}%, RAM: ${program['ramUsage']}%`
-	}
-	return result;
+	
+		return Array.from(this.taskManager).map(p => `Name - ${p['name']} | Usage - CPU: ${p['cpuUsage'].toFixed(0)}%, RAM: ${p['ramUsage'].toFixed(0)}%`).join("\n");
+	
+	
    }
    decreaseHddMemory(neededMemory){
 	   this.hddMemory-=neededMemory;
@@ -89,14 +84,9 @@ class Computer {
     return (this.installedPrograms.find(p => p['name'] == program))?true:false;
    }
    isOpened(program){
-	return (this.installedPrograms.find(p => p['name'] == program))?true:false;
+	return (this.taskManager.find(p => p['name'] == program))?true:false;
    }
-   totMemoryUsage(){
-	return this.taskManager.reduce((a,c) => a+c['ramUsage'],0);
-   }
-   totCpuUsage(){
-	return this.taskManager.reduce((a,c) => a+c['cpuUsage'],0);
-   }
+   
 }
 
 let computer = new Computer(4096, 7.5, 250000);
@@ -110,5 +100,4 @@ computer.installAProgram('Solitare', 1500);
 
 computer.openAProgram('Excel');
 computer.openAProgram('Solitare');
-console.log(computer.taskManager);
-</script>
+console.log(computer.taskManagerView());
