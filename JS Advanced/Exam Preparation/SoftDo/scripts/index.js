@@ -24,7 +24,7 @@ function mySolution() {
         let imageTemplateElement = document.createElement("img");
         imageTemplateElement.src = "./images/user.png";
         imageTemplateElement.width = 32;
-        imageTemplateElement.heigth = 32;
+        imageTemplateElement.height = 32;
 
         let spanUsernameElement = document.createElement("span");
         spanUsernameElement.innerHTML = (username == '') ? "Anonymous" : username;
@@ -62,7 +62,7 @@ function mySolution() {
         let imageTemplateElement = document.createElement("img");
         imageTemplateElement.src = "./images/user.png";
         imageTemplateElement.width = 32;
-        imageTemplateElement.heigth = 32;
+        imageTemplateElement.height = 32;
 
         let spanUsernameElement = document.createElement("span");
         spanUsernameElement.innerHTML = current.parentElement.previousSibling.previousSibling.innerHTML;
@@ -76,11 +76,14 @@ function mySolution() {
         let buttonReply = document.createElement("button");
         buttonReply.className = "reply";
         buttonReply.innerHTML = "Reply";
+		
 		//TODO add functionality to reply
 		actionsDiv.appendChild(buttonReply);
 		
 		let replySection = document.createElement("div");
+		replySection.className = 'replySection';
 		replySection.style.display = 'none';
+		
 		
 		let inputReply = document.createElement("input");
 		inputReply.className = 'replyInput';
@@ -98,6 +101,10 @@ function mySolution() {
 		replySection.appendChild(inputReply);
 		replySection.appendChild(buttonSend);
 		replySection.appendChild(ol);
+		buttonSend.addEventListener('click',answer);
+		
+		
+		
 		
 		openQuestionTemplate.appendChild(imageTemplateElement);
 		openQuestionTemplate.appendChild(spanUsernameElement);
@@ -106,8 +113,30 @@ function mySolution() {
 		openQuestionTemplate.appendChild(replySection);
 		
 		openQuestionsSection.appendChild(openQuestionTemplate);
+		buttonReply.addEventListener("click",toggleReplySection);
        // buttonArchive.addEventListener("click",removeElement);
 		
+	}
+	function toggleReplySection(ev){
+		let current = ev.target;
+		if(current.innerHTML == 'Reply'){
+			
+			current.parentElement.nextSibling.style.display = 'block';
+			current.innerHTML = 'Back'
+		}else{
+			current.parentElement.nextSibling.style.display = 'none';
+			current.innerHTML = 'Reply'
+		}
+		 
+	}
+	function answer(ev){
+		let current = ev.target;
+		let answer = current.previousSibling;
+		let answerLi = document.createElement('li');
+		answerLi.innerHTML = answer.value;
+		
+		current.nextSibling.appendChild(answerLi);
+		answer.value = '';
 	}
     function removeElement(ev) {
         let current = ev.target;
