@@ -1,12 +1,7 @@
 <script>
 function rotate(arr){
-	let rotation = arr[arr.length-1];
-	for(let i=0;i < arr.length ;i++){
-		arr.rotate();
-	}
-	console.log(rotate);
-	Array.prototype.rotate = (function() {
-    var unshift = Array.prototype.unshift,
+Array.prototype.rotate = (function() {
+    var shift = Array.prototype.unshift,
         splice = Array.prototype.splice;
 
     return function(count) {
@@ -16,6 +11,15 @@ function rotate(arr){
         unshift.apply(this, splice.call(this, count % len, len));
         return this;
     };
-})();
+	})();
+	let rotation = arr[arr.length-1];
+	arr.pop();
+	//console.log(rotation);
+	
+		arr = arr.rotate(1);
+	
+	console.log(arr);
+	
 }
+rotate([1,2,3,4,2]);
 </script>
