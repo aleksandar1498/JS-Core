@@ -1,0 +1,63 @@
+<script>
+class Vacation {
+	constructor (organizer,destination,budget){
+		this.organizer = organizer;
+		this.destination = destination;
+		this.budget = budget
+		this.kids = {};
+	}
+	registerChild(name, grade, budget){
+		if(budget < this.budget){
+			return name+"'s money is not enough to go on vacation to "+this.destination+".";
+		}
+		if(!this.kids[grade]){
+		
+			this.kids[grade] = [];
+		}
+		
+		if(this.kids[grade].find(x => x.split("-")[0] == name)){
+			return `${name} is already in the list for this ${this.destination} vacation.`;
+		}
+		
+		this.kids[grade].push(`${name}-${budget}`);
+		return this.kids[grade];
+	}
+	removeChild(name,grade){
+		let children = this.kids[grade].find(x => x.split("-")[0] == name);
+		if(!this.kids[grade] || !children){
+			return "We could't find "+name+` in ${grade} grade.`;
+		}
+		let indexOfChild = this.kids[grade].findIndex(x => x == children);
+		this.kids[grade].splice(indexOfChild,1);
+		return this.kids[grade];
+		
+	}
+	toString(){
+		if(!this.kids[grade]  ){
+			return `No children are enrolled for the trip and the organization of ${this.organizer} falls out...`;
+		}else if(this.kids[grade].length == 0){
+		
+		}
+		let output = [];
+		let keys = Array.from(Object.keys(this.kids)).sort((a,b)=> a.localeCompare(b));
+		console.log(keys);
+		
+	}
+	get numberOfChildren(){
+		let totKids = 0;
+		for(const grade of Object.keys(this.kids)){
+			totKids+=this.kids[grade].length;
+		}
+		return totKids;
+	}
+}
+let vacation = new Vacation('Mr Pesho', 'San diego', 2000);
+console.log(vacation.registerChild('Gosho', 5, 2000));
+console.log(vacation.registerChild('Lilly', 6, 2100));
+console.log(vacation.registerChild('Pesho', 6, 2400));
+console.log(vacation.registerChild('Goshos', 5, 2000));
+console.log(vacation.registerChild('Tanya', 5, 6000));
+console.log(vacation.registerChild('Mitko', 10, 1590));
+console.log(vacation.toString());
+
+</script>
