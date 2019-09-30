@@ -7,7 +7,7 @@ function cardFactory(face, suit) {
         { "C" :"\u2663"}
     ];
     if (!validFaces.includes(face) || !validSuits.find(x => Object.keys(x)[0] == suit)) {
-        throw new Error("Error");
+        throw Error("Error");
     }
   
     return {
