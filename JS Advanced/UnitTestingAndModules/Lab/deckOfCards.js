@@ -7,7 +7,7 @@ function printDeckOfCards(cards) {
             { "S" :"\u2660"},
             { "H" :"\u2665"},
             { "D" :"\u2666"},
-            { "C" :"\u2663"}
+            { "C" :"\u2663"},
         ];
         if (!validFaces.includes(face) || !validSuits.find(x => Object.keys(x)[0] == suit)) {
             throw new Error("Error");
