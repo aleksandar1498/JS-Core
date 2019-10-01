@@ -29,7 +29,7 @@ input:hover, input:focus {
 
 /* line 18, /Applications/MAMP/htdocs/palash/cl/august/200 FitFloss Fitness/fitfloss html/sass/_common.scss */
 .section_padding {
-  padding: 5em 0em;
+      padding: 2em 0em;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -2071,7 +2071,9 @@ ul {
     width: 80px;
     height: 90px;
     line-height: 70px;
+	font-size:1em;
   }
+ 
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -2080,7 +2082,9 @@ ul {
     width: 90px;
     height: 100px;
     line-height: 80px;
+	font-size:1.1em;
   }
+  
 }
 
 /* line 28, /Applications/MAMP/htdocs/palash/cl/august/200 FitFloss Fitness/fitfloss html/sass/_menu.scss */
@@ -2291,7 +2295,7 @@ ul {
 
 .main_menu .navbar-brand h3{
   color: black;
-    font-size: 1.5em;
+   font-size: 1.5em;
     margin: 1em 0;
 }
  .navbar-brand h3 span {
@@ -2303,9 +2307,10 @@ ul {
 .banner_part {
   position: relative;
   z-index: 1;
-  background-image: url(../img/banner_bg.png);
+  background-image: url(../img/banner_bg.jpg);
+  background-size:100%;
+  background-attachment :fixed;
   background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
 }
 
@@ -2344,6 +2349,8 @@ ul {
     height: 650px;
     text-align: center;
   }
+  
+ 
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -2411,7 +2418,13 @@ ul {
   .banner_part .banner_text h3 {
 	  font-size: 15px;
   }
-}
+   .banner_part {
+	    background-position-x: -23em;
+	}
+  }
+	  
+  
+
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   /* line 61, /Applications/MAMP/htdocs/palash/cl/august/200 FitFloss Fitness/fitfloss html/sass/_banner.scss */
@@ -2478,19 +2491,36 @@ ul {
   color: #000;
   font-size: 21px;
   font-weight: 400;
+  text-align:center;
   display: block;
   cursor:pointer;
   margin: 38px 0 17px;
+}
+.popular_cource .single_popular_cource h3.active {
+  color: #e91e63;
+ 
 }
 .popular_cource .single_popular_cource img {
     width: 100%;
     max-height: 17em;
 }
 .popular_cource .single_popular_cource p {
-   display : none;
+   overflow: hidden;
    height : 0px;
+   transition: 0.5s;
 }
-.popular_cource .single_popular_cource h3:hover,.popular_cource .single_popular_cource h3.active {
+.popular_cource .single_popular_cource p.active {
+   height : 100px;
+}
+.popular_cource .single_popular_cource a {
+    display: block;
+    text-align: center;
+    padding: 0.5em 1em;
+    margin: .3em auto;
+    width: 13em;
+	cursor:pointer;
+}
+.popular_cource .single_popular_cource h3.active {
   color: #e91e63;
 }
 
@@ -3295,8 +3325,11 @@ ul {
 }
 
 /* line 214, /Applications/MAMP/htdocs/palash/cl/august/200 FitFloss Fitness/fitfloss html/sass/_footer.scss */
+
 .footer-area .copyright_part_text {
-  margin-top: 100px;
+    margin-top: 3em;
+    margin-bottom: 1em;
+}
 }
 
 /* line 216, /Applications/MAMP/htdocs/palash/cl/august/200 FitFloss Fitness/fitfloss html/sass/_footer.scss */
