@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="css/magnific-popup.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"
+    type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
+    type="text/javascript" charset="utf-8"></script>
 </head>
 
 <body>
@@ -258,7 +262,7 @@
 				 <div class="col-sm-12 col-md-8 col-lg-5">
                     <div class="single-footer-widget footer_2">
                         <h4>Where you can find us</h4>
-                        <div id="map"></div>
+                        <div id="mapContainer"></div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
@@ -317,20 +321,25 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/custom.js"></script>
 	<script src="js/myLogic.js"></script>
 	<script>
-	function initMap() {
-  // The location of Uluru
-  var uluru = {lat: 42.6444994,lng : 23.3425915};
-  // The map, centered at Uluru
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 13, center: uluru});
-  // The marker, positioned at Uluru
-  var marker = new google.maps.Marker({position: uluru, map: map});
-}
 
+  // The location of Uluru
+  var platform = new H.service.Platform({
+    'apikey': 'AHegL8ZXwZZSlu-8lNXoHK6w2_MCttx_nRC6q5WlSJ8'
+    });
+
+    // Obtain the default map types from the platform object
+    var maptypes = platform.createDefaultLayers();
+
+    // Instantiate (and display) a map object:
+    var map = new H.Map(
+    document.getElementById('mapContainer'),
+    maptypes.vector.normal.map,
+    {
+      zoom: 10,
+      center: { lng: 42.6444994, lat: 23.3425915 }
+    });
+    
 	</script>
-	<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDG2S_oT3-FGKkLYsZS44fnmHB9xwEdjdo&callback=initMap">
-    </script>
 </body>
 
 </html>
