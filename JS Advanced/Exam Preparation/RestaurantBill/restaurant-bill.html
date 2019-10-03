@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Bill</title>
+    <style>
+        body {
+            padding: 30px;
+        }
+
+        table,
+        section {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 5px 20px;
+        }
+
+        th,
+        tfoot td {
+            background: #cccccc;
+        }
+
+        tr:nth-child(odd) {
+            background: #eeeeee;
+        }
+
+        tr:nth-child(even) {
+            background: #dddddd;
+        }
+
+        tfoot>tr td {
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        section {
+            margin-top: 10px;
+            width: 177px;
+            background: #cccccc;
+        }
+
+        section>* {
+            display: block;
+            padding: 5px;
+        }
+
+        h3 {
+            margin: 0;
+            text-align: center;
+        }
+
+        button {
+            margin: 5px auto;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <h2>Restaurant Bill</h2>
+    <table id="bill">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="product-list"></tbody>
+        <tfoot>
+            <tr>
+                <td>Total:</td>
+                <td>0.00</td>
+            </tr>
+        </tfoot>
+    </table>
+    <section id="add-product">
+        <h3>Add new product</h3>
+        <label>Product:
+            <input type="text">
+        </label>
+        <label>Price:
+            <input type="number">
+        </label>
+        <button onclick="addProduct()">Add</button>
+    </section>
+    <script>
+        function addProduct() {
+            let inputFields = document.getElementById("add-product").getElementsByTagName("input");
+            let tBody = document.getElementById("product-list");
+            let product = inputFields[0];
+            let price = inputFields[1];
+            let row = createRow (product.value,price.value);
+            if(row != ''){
+                tBody.innerHTML+=row+"\n";
+                addToTotalSum(Number(price.value));
+                price.value = "";
+                product.value = "";
+            }
+
+            function createRow (product,price){
+                if(product && price){
+                    return `<tr><td>${product}</td><td>${price}</td></tr>`;
+                }
+                return '';
+            }
+            function addToTotalSum(price){
+                let totalSumElement = document.querySelector("tfoot tr td:nth-child(2)");
+                let currentSum = Number(totalSumElement.innerHTML);
+                currentSum=currentSum+price;
+                totalSumElement.innerHTML = currentSum;
+            }
+        }
+    </script>
+</body>
+
+</html>
