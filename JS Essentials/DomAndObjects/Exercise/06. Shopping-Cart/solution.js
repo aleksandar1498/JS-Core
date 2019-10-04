@@ -25,7 +25,7 @@ function solve() {
       for(const key of keys){
          totalPrice+=boughtProducts[key];
       }
-      textAreaElement.value+=`You bought ${keys.join(" ")} for ${totalPrice.toFixed(2)}.`;
+      textAreaElement.value+=`You bought ${keys.join(", ")} for ${totalPrice.toFixed(2)}.`;
    });
    
 
