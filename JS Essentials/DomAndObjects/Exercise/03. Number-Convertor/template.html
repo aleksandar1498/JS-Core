@@ -18,9 +18,6 @@
         </select>
         <label for="selectMenuTo">To</label>
         <select id="selectMenuTo">
-            <option selected value=""></option>
-            <option value="binary">Binary</option>
-            <option value="hexadecimal">Hexadecimal</option>
         </select>
         <button>Convert it</button>
 
@@ -30,8 +27,15 @@
         <input type="text" name="output" id="result" disabled readonly />
     </footer>
     <script>
-        solve();
-        
+        result();
+        $("#input").val("20");
+        $("#selectMenuTo").val("binary");
+        $("button").trigger("click");
+
+        let res = $("#result").val();
+        console.log(res);
+
     </script>
 </body>
+
 </html>
