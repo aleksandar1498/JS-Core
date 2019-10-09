@@ -1,0 +1,38 @@
+<script>
+class Rat{
+	constructor(name){
+		this.name = name;
+		this.unitedRats = [];
+	}
+	
+	getRats(){
+		return this.unitedRats;
+	}
+	unite(otherRat){
+		if(otherRat instanceof Rat){
+			this.unitedRats.push(otherRat);
+		}
+		
+	}
+	toString(){
+		let output = [this.name];
+		for(const child of this.unitedRats){
+			output.push(`##${child.name}`);
+		}
+		return output.join('\n');
+	}
+}
+let firstRat = new Rat("Peter");
+console.log(firstRat.toString()); // Peter
+ 
+console.log(firstRat.getRats().length); // []
+
+firstRat.unite(new Rat("George"));
+firstRat.unite(new Rat("Alex"));
+console.log(firstRat.getRats());
+// [ Rat { name: 'George', unitedRats: [] },
+//  Rat { name: 'Alex', unitedRats: [] } ]
+
+console.log(firstRat.toString());
+
+</script>
