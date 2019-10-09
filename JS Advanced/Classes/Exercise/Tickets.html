@@ -1,0 +1,51 @@
+<script>
+function solve(array,criteria){
+	class Ticket{
+		constructor(destination,price,status){
+			this.destination = destination ;
+			this.price = price;
+			this.status = status;
+		}
+		get destination(){
+			return this._destination;
+		}
+		get price(){
+			return this._price;
+		}
+		get status(){
+			return this._status;
+		}
+		set destination(destination){
+			this._destination = destination;
+		}
+		set price(price){
+			 this._price=price;
+		}
+		set status(status){
+			 this._status = status;
+		}
+	}
+	
+	let tickets = [];
+	for(let dest of array){
+		dest = dest.split(/\|/g);
+		let ticket = new Ticket(dest[0],Number(dest[1]),dest[2]);
+		tickets.push(ticket);
+	}
+	switch(criteria){
+		case 'destination':
+			tickets.sort((a,b) => a.destination.localeCompare(b.destination));
+			break;
+		case 'price':
+			tickets.sort((a,b) => a.price - b.price);
+			break;
+		case 'status':
+			tickets.sort((a,b) => a.status.localeCompare(b.status));
+			break;
+	}
+	return tickets;
+
+	
+}
+console.log(solve(['Philadelphia|94.20|available','New York City|95.99|available','New York City|95.99|sold','Boston|126.20|departed'],'destination'));
+</script>
