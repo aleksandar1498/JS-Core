@@ -1,0 +1,26 @@
+<script>
+let Extensible = (function solve(){
+	class Extensible{
+		static id = 0;
+		constructor(){
+			this.id = Extensible.id;
+			Extensible.id++;
+		}
+	
+		extend(template){
+			for(const proto in template){
+				if(typeof template[proto] == 'function'){
+					Extensible.prototype[proto] = template[proto];
+				}else{
+					this[proto] = template[proto];
+				}
+			}
+		}
+	}
+return Extensible;
+})();
+let a = new Extensible();
+console.log(a);
+a.extend({extensionMethod: function () {return 0;},extensionProperty: 'someString'});
+console.log(a);
+</script>
