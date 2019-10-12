@@ -1,7 +1,9 @@
 <script>
-class CheckingAccount{
-	static clientRegex = new RegExp("^[0-9]{6}$","gi");
-	static emailRegex = new RegExp("^[0-9A-Za-z]+@[A-Za-z\.]+$","gi");
+
+	class CheckingAccount{
+	 
+	
+	
 	constructor(clientId, email, firstName, lastName ){
 		this.clientId = clientId;
 		this.email = email;
@@ -9,22 +11,43 @@ class CheckingAccount{
 		this.lastName = lastName;
 	}
 	set clientId(clientId){
-		console.log(CheckingAccount.clientRegex.test(clientId) == false);
-		console.log(typeof clientId != 'number');
-		if(typeof clientId != 'number' || CheckingAccount.clientRegex.test(clientId) == false){
+	
+
+		if(!clientId.match(/[0-9]{6}/)){
 			throw TypeError("Client ID must be a 6-digit number");
 		}
 		this._clientId = clientId;
 	}
 	set email(email){
-		console.log(CheckingAccount.emailRegex.test(email));
-		console.log(typeof email);
-		if(typeof email != 'string' || CheckingAccount.emailRegex.test(email) == false){
-			throw TypeError("Invalid email");
+
+		if(!email.match(/[0-9A-Za-z]+@[A-Za-z\.]/)){
+			throw TypeError("Invalid e-mail");
 		}
 		this._email = email;
 	}
+	set firstName(firstName){
+		let nameRegex = new RegExp("^[A-Za-z]+$");
+		if(firstName.length < 3 || firstName.length > 20){
+			throw TypeError("First name must be between 3 and 20 characters long");
+		}
+		if(nameRegex.test(firstName) == false){
+			throw TypeError("First name must contain only Latin characters");
+		}
+		this._firstName = firstName;
+	}
+	set lastName(lastName){
+		let nameRegex = new RegExp("^[A-Za-z]+$");
+
+		if(lastName.length < 3 || lastName.length > 20){
+			throw TypeError("Last name must be between 3 and 20 characters long");
+		}
+		if(nameRegex.test(lastName) == false){
+			throw TypeError("Last name must contain only Latin characters");
+		}
+		this._lastName = lastName;
+	}
 	
 }
-let account = new CheckingAccount(123213,"asd@","alex","vesi");
+
+let account = new CheckingAccount('1314525', 'ivan@some.com', 'I', 'Petrov');
 </script>

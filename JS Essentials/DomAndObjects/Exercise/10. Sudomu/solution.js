@@ -12,22 +12,21 @@ function solve() {
                 return a;
             }, []));
         }
+        console.log(map);
         if(checkSudoku(map)){
             table.style.border = '2px solid green';
-            divCheck.getElementsByTagName("p")[0].innerHTML = "You solve it! Congratulations!";
-            divCheck.style.color = 'green';
+            divCheck.getElementsByTagName("p")[0].textContent = "You solve it! Congratulations!";
+            divCheck.getElementsByTagName("p")[0] = 'green';
         }else{
             table.style.border = '2px solid red';
-            divCheck.getElementsByTagName("p")[0].innerHTML = "NOP! You are not done yet...";
-            divCheck.style.color = 'red';
+            divCheck.getElementsByTagName("p")[0].textContent = "NOP! You are not done yet...";
+            divCheck.getElementsByTagName("p")[0] = 'red';
         }
         function checkSudoku(map){
            
             for (let i = 0; i < map.length; i++) {
                 let workingRow  = map[i].splice(0, map[i].length);
-                if(workingRow.some(x => x != 1 && x != 2 && x != 3)){
-                    return false;
-                }
+
                 workingRow.sort((a, b) => a - b);
                 for (let j = 0; j < workingRow.length - 1; j++) {
                     if (workingRow[j] == workingRow[j + 1]) {
@@ -61,8 +60,8 @@ function solve() {
             x.value = "";
         });
         table.style.border = 'none';
-        divCheck.getElementsByTagName("p")[0].innerHTML = "";
-        divCheck.style.color = 'black';
+        divCheck.getElementsByTagName("p")[0].textContent = "";
+    
      
     }
 }
