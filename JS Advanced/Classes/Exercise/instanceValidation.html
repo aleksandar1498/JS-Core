@@ -13,7 +13,7 @@
 	set clientId(clientId){
 	
 
-		if(!clientId.match(/[0-9]{6}/)){
+		if(!clientId.match(/^[0-9]{6}$/)){
 			throw TypeError("Client ID must be a 6-digit number");
 		}
 		this._clientId = clientId;
