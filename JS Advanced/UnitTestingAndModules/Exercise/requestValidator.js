@@ -42,3 +42,4 @@ function solve(request){
     }
 }
 console.log(solve({method: 'POST',uri: 'home$',version : "HTTP/0.9",message: ''}));
+module.exports = {solve};
