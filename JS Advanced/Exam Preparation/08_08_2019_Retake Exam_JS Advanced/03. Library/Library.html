@@ -1,0 +1,81 @@
+<script>
+
+class Library{
+	 constructor(libraryName){
+		this.libraryName = libraryName ;
+		this.subscribers = [];
+		this.subscriptionTypes = {
+			'normal' : this.libraryName.length,
+			'special' : this.libraryName.length*2,
+			'vip' : Number.MAX_SAFE_INTEGER
+		}
+	 }
+	 
+	 subscribe(name,type){
+		if(Object.keys(this.subscriptionTypes).includes(type) == false){
+		 throw Error(`The type ${type} is invalid`);
+		}
+		let subscriberIndex = this.subscribers.findIndex(x => x.name == name);
+		if(subscriberIndex < 0){
+			let subscriber = {
+			'name':name,
+			'type':type,
+			'books':[]
+			}
+			this.subscribers.push(subscriber);
+			return subscriber;
+		}
+		this.subscribers[subscriberIndex].type = type;
+		if(this.subscriptionTypes[type] < this.subscribers[subscriberIndex].books.length){
+			this.subscribers[subscriberIndex].books = this.subscribers[subscriberIndex].books.slice(0,subscriptionTypes[type]);
+		}
+		return this.subscribers[subscriberIndex];
+	 }
+	 
+	 unsubscribe(name){
+		let subscriberIndex = this.subscribers.findIndex(x => x.name == name);
+		if(subscriberIndex < 0){
+			throw Error(`There is no such subscriber as ${name}`);
+		}
+		this.subscribers.splice(subscriberIndex,1);
+		return this.subscribers;
+	 }
+	 
+	 receiveBook(subscriberName, bookTitle, bookAuthor){
+		let subscriberIndex = this.subscribers.findIndex(x => x.name == subscriberName);
+		if(subscriberIndex < 0){
+			throw Error(`There is no such subscriber as ${subscriberName}`);
+		}
+		if(this.subscribers[subscriberIndex].books.length >= this.subscriptionTypes[this.subscribers[subscriberIndex].type]){
+			throw Error(`You have reached your subscription limit ${this.subscriptionTypes[this.subscribers[subscriberIndex].type]}!`);
+		}
+		this.subscribers[subscriberIndex].books.push(
+			{
+				'title' : bookTitle,
+				'author' : bookAuthor
+			}	
+		);
+		return this.subscribers[subscriberIndex];
+	 }
+	 
+	 showInfo(){
+		if(this.subscribers.length == 0){
+			return `${this.libraryName} has no information about any subscribers`;
+		}
+		let output = [];
+		for(const sub of this.subscribers){
+			output.push(`Subscriber: ${sub.name}, Type: ${sub.type}\nReceived books: ${sub.books.map(b => `${b.title} by ${b.author}`).join(', ')}\n`);
+		}
+		return output.join('');
+	 }
+}
+let lib = new Library('Lib');
+
+lib.subscribe('Peter', 'normal');
+lib.subscribe('John', 'special');
+lib.unsubscribe('John');
+
+console.log(lib.subscribers);
+
+
+</script>
