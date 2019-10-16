@@ -39,4 +39,8 @@ class StringBuilder {
       return this._stringArray.join('');
     }
   }
+  let builder = new StringBuilder("Alex");
+  builder.remove([1,2,3].length,1);
+  console.log(builder._stringArray);
+
   module.exports = {StringBuilder};
