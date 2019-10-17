@@ -1,0 +1,78 @@
+<script>
+class Vacation{
+	constructor(organizer, destination, budget){
+		this.organizer = organizer;
+		this.destination = destination;
+		this.budget = budget;
+		this.kids = {} ;
+	}
+	
+	registerChild(name, grade, budget){
+		if(budget < this.budget){
+			return `${name}'s money is not enough to go on vacation to ${this.destination}.`;
+		}
+		if(!Object.keys(this.kids).includes(`${grade}`)){
+			this.kids[grade] = [];
+		}
+		if(this.kids[grade].find(x => {
+			x = x.split('-')[0];
+			return x == name;
+		})){
+			return `${name} is already in the list for this ${this.destination} vacation.`;
+		}
+		this.kids[grade].push(`${name}-${budget}`);
+		return this.kids[grade];
+		
+	}
+	removeChild(name,grade){
+		if(!Object.keys(this.kids).includes(`${grade}`)){
+			return `We couldn\'t find ${name} in ${grade} grade.`;
+		}
+		let kidIndex = this.kids[grade].findIndex(x => {
+			x = x.split('-')[0];
+			return x == name;
+		});
+		if(kidIndex < 0){
+			return `We couldn\'t find ${name} in ${grade} grade.`;
+		}
+		this.kids[grade] = this.kids[grade].filter(x => {
+			x = x.split('-')[0];
+			return x != name;
+		});
+		return this.kids[grade];
+	}
+	
+	toString(){
+		if(JSON.stringify(this.kids) == '{}'){
+			return `No children are enrolled for the trip and the organization of ${this.organizer} falls out...`;
+		}
+		let kid = this.kids;
+		let output = [`${this.organizer} will take ${this.numberOfChildren} children on trip to ${this.destination}\n`];
+		for(const keyKid of Object.keys(kid)){
+			output.push(`Grade: ${keyKid}\n`);
+			let i=1;
+			for(const kd of kid[keyKid]){
+				output.push(`${i}. ${kd}\n`);
+				i++;
+			}
+		}
+		return output.join(``);
+		
+	}
+	get numberOfChildren(){
+			let tot = 0;
+			for(const grade of Object.keys(this.kids)){
+				tot+=this.kids[grade].length;
+			}
+			return tot;
+		}
+}
+let vacation = new Vacation('Mr Pesho', 'San diego', 2000);
+console.log(vacation.registerChild('Gosho', 5, 2000));
+console.log(vacation.registerChild('Sashko', 5, 2000));
+console.log(vacation.registerChild('Lilly', 6, 2100));
+console.log(vacation.removeChild('Gosho',5));
+console.log(vacation.toString());
+
+
+</script>
