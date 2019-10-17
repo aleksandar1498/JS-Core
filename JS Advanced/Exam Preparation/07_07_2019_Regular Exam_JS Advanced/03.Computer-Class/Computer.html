@@ -1,10 +1,9 @@
 <script>
 class Computer{
 	constructor(ramMemory, cpuGHz, hddMemory){
-		this.ramMemory = Number(ramMemory);
-		this.cpuGHz = Number(cpuGHz);
-		
-		this.hddMemory = Number(hddMemory);
+		this.ramMemory = ramMemory;
+		this.cpuGHz = cpuGHz;
+		this.hddMemory = hddMemory;
 		this.taskManager = [];
 		this.installedPrograms = [];
 		this.totCpuUsage = 0;
@@ -12,8 +11,8 @@ class Computer{
 	}
 	
 	installAProgram(name, requiredSpace){
-		if(requiredSpace > this.hddMemory){
-			throw Error('There is not enough space on the hard drive');
+		if(this.hddMemory < requiredSpace){
+			throw new Error('There is not enough space on the hard drive');
 		}
 		let program = {name,requiredSpace};
 		this.hddMemory-=requiredSpace;
@@ -22,43 +21,38 @@ class Computer{
 		return program;
 	}
 	uninstallAProgram(name){
-		let indexOfProgram = this.installedPrograms.findIndex(p => p.name = name);
-		if(indexOfProgram < 0){
-			throw Error('Control panel is not responding');
+		let program = this.installedPrograms.find(p => p.name == name);
+		if(!program){
+			throw new Error('Control panel is not responding');
 		}
-		let indexOfProgramInTaskManager = this.taskManager.findIndex(x => x.name == name);
-		if(indexOfProgramInTaskManager >= 0){
-			this.totCpuUsage-=this.taskManager[indexOfProgramInTaskManager].cpuUsage;
-			this.totRamUsage-=this.taskManager[indexOfProgramInTaskManager].ramUsage;
-			this.taskManager.splice(indexOfProgramInTaskManager,1);
-		}
+		let indexOfProgram = this.installedPrograms.findIndex(p => p.name === name);
 		this.hddMemory+=this.installedPrograms[indexOfProgram].requiredSpace;
 		this.installedPrograms.splice(indexOfProgram,1);
 		return this.installedPrograms;
 	}
 	openAProgram(name){
-		let indexOfProgram = this.installedPrograms.findIndex(p => p.name == name);
+		let program = this.installedPrograms.find(p => p.name == name);
 		
-		if(indexOfProgram < 0){
-			throw Error(`The ${name} is not recognized`);
+		if(!program){
+			throw new Error(`The ${name} is not recognized`);
 		}
 		if(this.taskManager.find(x => x.name == name)){
-			throw Error(`The ${name} is already open`);
+			throw new Error(`The ${name} is already open`);
 		}
-		let ramUsage = (this.installedPrograms[indexOfProgram].requiredSpace / this.ramMemory) * 1.5;
-		let cpuUsage = ( ( this.installedPrograms[indexOfProgram].requiredSpace / this.cpuGHz ) / 500) * 1.5;
+		let ramUsage = (program.requiredSpace / this.ramMemory) * 1.5;
+		let cpuUsage = ( ( program.requiredSpace / this.cpuGHz ) / 500) * 1.5;
 		let openProgram = { name ,ramUsage,cpuUsage};
-		
-		
-		if(openProgram.ramUsage+this.totRamUsage >= 100){
-			throw Error(`${name} caused out of memory exception`);
-		}
-		
-		if(openProgram.cpuUsage+this.totCpuUsage >= 100){
-			throw Error(`${name} caused out of cpu exception`);
-		}
 		this.totRamUsage+= openProgram.ramUsage;
 		this.totCpuUsage+= openProgram.cpuUsage;
+		
+		if(this.totRamUsage >= 100){
+			throw new Error(`${name} caused out of memory exception`);
+		}
+		
+		if(this.totCpuUsage >= 100){
+			throw new Error(`${name} caused out of cpu exception`);
+		}
+		
 		this.taskManager.push(openProgram);
 		
 		return openProgram;
