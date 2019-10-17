@@ -1,21 +1,25 @@
 function solve() {
-	let inp = document.getElementById("input").value;
-	inp = inp.replace(/[^0-1]/g,'')
-	let sum = inp.split('').map(x => Number(x)).reduce((a,c) => a+c,0);
-	
-	while(sum/10 > 1){
-		sum = sum.toString().split('').map(x => Number(x)).reduce((a,c) => a+c,0);
-	}
-	
-	
-	inp = inp.slice(sum,inp.length-sum);
+    let text = document.getElementById('input').value;
+    let textDigits = text;
 
-	let res = [];
-	
-	for(let i=0;i<inp.length;i+=8){
-	res.push(String.fromCharCode(parseInt(inp.slice(i,i+8), 2)));
-	}	
-	document.getElementById("resultOutput").innerHTML=res.filter(x => x.match(/[a-zA-Z\s]+/g)).join("").trim();
+    while (textDigits.length > 1) {
+        textDigits = textDigits.split('').map(Number)
+            .reduce((a, b) => a + b, 0).toString();
+    }
 
-	
+    let removeSum = Number(textDigits);
+    let length = text.length - removeSum * 2;
+
+    let output = text
+        .substr(removeSum, length)
+        .split(/(\d{8})/)
+        .map((x) => parseInt(x, 2))
+        .map((x) => String.fromCharCode(x))
+        .filter((x) => /[A-Za-z ]+/g.test(x))
+        .join('');
+
+    if (output) {
+        document.querySelector('div.boxes').style.display = 'block';
+        document.getElementById('resultOutput').textContent = output;
+    }
 }
