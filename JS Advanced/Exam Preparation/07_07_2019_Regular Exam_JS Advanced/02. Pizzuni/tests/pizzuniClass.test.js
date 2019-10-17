@@ -44,27 +44,15 @@ describe("PizzUni tests", function () {
     describe("makeAnOrder",()=>{
         it("should throw error if the user does not exists",()=>{
             let fakeCall = () => pizzUni.makeAnOrder("Alex@gmail.com","Italian Style",'Fanta');
-            expect(fakeCall).to.throw();
+            expect(fakeCall).to.throw('You must be registered to make orders!');
         });
         it("should throw error if the pizza does not exists",()=>{
+            pizzUni.registerUser("Alex@gmail.com");
             let fakeCall = () => pizzUni.makeAnOrder("Alex@gmail.com","Bulgarian Style",'Fanta');
-            expect(fakeCall).to.throw();
+
+            expect(fakeCall).to.throw('You must order at least 1 Pizza to finish the order.');
         });
-        it("should add the order with both Pizza and Drink valid",()=>{
-            pizzUni.registerUser("Alex@gmail.com");
-            pizzUni.makeAnOrder("Alex@gmail.com","Italian Style",'Fanta');
-            expect(JSON.stringify(pizzUni.orders)).to.be.equal('[{"orderedPizza":"Italian Style","orderedDrink":"Fanta","email":"Alex@gmail.com","status":"pending"}]');
-        });
-        it("should add the order with valid Pizza and absent drink",()=>{
-            pizzUni.registerUser("Alex@gmail.com");
-            pizzUni.makeAnOrder("Alex@gmail.com","Italian Style");
-            expect(JSON.stringify(pizzUni.orders)).to.be.equal('[{"orderedPizza":"Italian Style","email":"Alex@gmail.com","status":"pending"}]');
-        });
-        it("should add the order with valid Pizza and invalid Drink",()=>{
-            pizzUni.registerUser("Alex@gmail.com");
-            pizzUni.makeAnOrder("Alex@gmail.com","Italian Style","Rakiq");
-            expect(JSON.stringify(pizzUni.orders)).to.be.equal('[{"orderedPizza":"Italian Style","email":"Alex@gmail.com","status":"pending"}]');
-        });
+        
         it("should return the index of the order on success",()=>{
             pizzUni.registerUser("Alex@gmail.com");
            
@@ -93,15 +81,15 @@ describe("PizzUni tests", function () {
         });
     });
     describe("doesTheUserExist",()=>{
-        it("should throw undefined if the user does not exists",()=>{
-            expect(typeof pizzUni.doesTheUserExist("vesi@abv.bg")).to.be.equal('undefined');
+        it("should be undefined if the user does not exists",()=>{
+            expect(pizzUni.doesTheUserExist("vesi@abv.bg")).to.be.undefined;
         });
-        it("should throw undefined if the email passed is of invalid type",()=>{
-            expect(typeof pizzUni.doesTheUserExist(1)).to.be.equal('undefined');
-        })
+   
         it("should return the object of the user if it exists",()=>{
-            pizzUni.registerUser("vesi@abv.bg");
-            expect(JSON.stringify(pizzUni.doesTheUserExist("vesi@abv.bg"))).to.be.equal('{"email":"vesi@abv.bg","orderHistory":[]}');
+            const email = 'sample@abv.bg';
+            pizzUni.registerUser(email);
+            pizzUni.makeAnOrder(email, 'Italian Style', 'Coca-Cola')
+            expect(JSON.stringify(pizzUni.doesTheUserExist(email))).to.be.equal('{"email":"sample@abv.bg","orderHistory":[{"orderedPizza":"Italian Style","orderedDrink":"Coca-Cola"}]}');
         });
     });
     describe("completeOrder",()=>{
