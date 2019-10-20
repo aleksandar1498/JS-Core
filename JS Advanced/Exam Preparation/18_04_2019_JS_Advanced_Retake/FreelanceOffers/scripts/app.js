@@ -28,12 +28,12 @@
 		let company = document.getElementById('company').value;
 		let description = document.getElementById('description').value;
 		
-		if(name == false || company == false || description == false){
+		if(offerName == false || company == false || description == false){
 			return;
 		}
 		offerContainer.innerHTML+=  `<div class="col-3">
                 <div class="card text-white bg-dark mb-3 pb-3" style="max-width: 18rem;">
-                    <div class="card-header">${name}</div>
+                    <div class="card-header">${offerName}</div>
                     <div class="card-body">
                         <h5 class="card-title">${company}</h5>
                         <p class="card-text">${description}</p>
@@ -66,4 +66,4 @@
 		offerForm.style.display = 'none';
 	}
 
-	});
+});
