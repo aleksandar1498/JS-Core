@@ -1,0 +1,63 @@
+<script>
+class BookCollection{
+	constructor(shelfGenre,room,shelfCapacity){
+		this.shelfGenre = shelfGenre;
+		this.room = room;
+		this.shelf = [];
+		this.shelfCapacity = (shelfCapacity) ? shelfCapacity : 0;
+	}
+	get shelfCondition(){
+		return this.shelfCapacity - this.shelf.length;
+	}
+	get room(){
+		return this._room;
+	}
+	set room(room){
+		if(!['livingRoom','bedRoom','closet'].includes(room)){
+			throw new Error(`Cannot have book shelf in ${room}`);
+		}
+		this._room = room;
+	}
+	addBook(bookName,bookAuthor,genre){
+		if(this.shelfCondition <= 0){
+			this.shelf.splice(0,1);
+		}
+		this.shelf.push({bookName,bookAuthor,genre});
+		this.shelf.sort((a,b) => {
+			return a.bookAuthor.localeCompare(b.bookAuthor);
+		});
+	}
+	throwAwayBook(bookName){
+		this.shelf = this.shelf.filter(b => b.bookName != bookName);
+	}
+	showBooks(genre){
+		let output = [`Results for search "${genre}":`];
+		this.shelf.filter(b => b.genre == genre).forEach(x => {
+		
+			output.push(`\uD83D\uDCD6 ${x.bookAuthor} – "${x.bookName}"`);
+		});
+		return output.join('\n');
+	}
+	toString(){
+		if(this.shelf.length == 0){
+			return "It's an empty shelf";
+		}
+		let output = [`"${this.shelfGenre}" shelf in ${this.room} contains:`];
+		this.shelf.forEach(b => {
+			output.push(`\uD83D\uDCD6 ${b.bookName} – "${b.bookAuthor}"`);
+		});
+		return output.join('\n');
+	}
+	
+}
+let bedRoom = new BookCollection('Mixed', 'bedRoom', 5);
+bedRoom.addBook("John Adams", "David McCullough", "history");
+bedRoom.addBook("The Guns of August", "Cuentos para pensar", "history");
+bedRoom.addBook("Atlas of Remote Islands", "Judith Schalansky");
+bedRoom.addBook("Paddle-to-the-Sea", "Holling Clancy Holling");
+console.log("Shelf's capacity: " + bedRoom.shelfCondition);
+console.log(bedRoom.showBooks("history"));
+
+
+
+</script>
