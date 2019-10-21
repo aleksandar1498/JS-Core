@@ -95,3 +95,4 @@ class FilmStudio {
         return output;
     }
 }
+module.exports={FilmStudio};
