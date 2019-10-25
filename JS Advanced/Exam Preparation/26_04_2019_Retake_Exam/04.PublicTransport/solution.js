@@ -85,22 +85,19 @@ class PublicTransportTable{
 				return;
 			}
 			//This is removing also those that has not to be removed
-			
-			Array.from(rows).filter(row => row.classList.contains('more-info')).forEach(r => {
-				r.previousElementSibling.lastElementChild.firstChild.innerHTML = 'More';
-				r.remove();	
-			});
+			PublicTransportTable.prototype.hideAdditionalInformation.call(searchBtn,rows);
+		
 			
 			if(typeInput.value != ''){
-				Array.from(rows).filter(row => {
+				this.showResultingRows(rows,'none',row => {
 					return !row.firstChild.textContent.includes(typeInput.value)
-				}).forEach(r => r.style.display = 'none');	
+				});
 			}
 			
 			if(nameInput.value != ''){
-				Array.from(rows).filter(row => {
-					return !row.getElementsByTagName('td')[1].textContent.includes(nameInput.value);
-				}).forEach(r => r.style.display = 'none');	
+				this.showResultingRows(rows,'none',row => {
+					return !row.firstChild.textContent.includes(nameInput.value)
+				});
 			}
 			
 			
@@ -112,13 +109,24 @@ class PublicTransportTable{
 		let clearBtn = document.getElementsByClassName("clear-btn")[0];
 		let rows = clearBtn.parentElement.parentElement.parentElement.nextElementSibling.getElementsByTagName("tr");
 		clearBtn.addEventListener('click',()=>{
-			Array.from(rows).filter(row => row.classList.contains('more-info')).forEach(r => {
+			PublicTransportTable.prototype.hideAdditionalInformation.call(clearBtn,rows);
+			this.showResultingRows(rows,'');
+			Array.from(rows).forEach(r => r.style.display = '');	
+		});
+	}
+	showResultingRows(rows,state,filt){
+		if(typeof filt != 'undefined'){
+			Array.from(rows).filter(filt).forEach(r => r.style.display = state);
+			return;			
+		}
+		Array.from(rows).forEach(r => r.style.display = state);
+	}
+	hideAdditionalInformation(rows){
+		
+		Array.from(rows).filter(row => row.classList.contains('more-info')).forEach(r => {
 				r.previousElementSibling.lastElementChild.firstChild.innerHTML = 'More';
 				r.remove();	
 			});
-				
-			Array.from(rows).forEach(r => r.style.display = '');	
-		});
 	}
 
 }
