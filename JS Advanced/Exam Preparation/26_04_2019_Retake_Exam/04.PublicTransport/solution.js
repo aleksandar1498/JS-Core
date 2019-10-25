@@ -2,6 +2,8 @@ class PublicTransportTable{
 	constructor(city){
 		this.tableBody = document.getElementsByClassName('vehicles-info')[0];
 		this.changeTableName(city);
+		this.addSearchFunctionality();
+		this.addClearFunctionality();
 	}
 	addVehicle(vehicleObj){
 		this.tableBody.appendChild(this.createMainInfoRow(vehicleObj));
@@ -71,5 +73,25 @@ class PublicTransportTable{
 	changeTableName(city){
 		let capt = document.getElementsByTagName('caption')[0];
 		capt.innerHTML = capt.innerHTML.replace(/({Town name})/,city);
+	}
+	addSearchFunctionality(){
+		let searchBtn = document.getElementsByClassName("search-btn")[0];
+		let typeInput = searchBtn.parentElement.previousElementSibling.previousElementSibling.getElementsByTagName('input')[0];
+	
+		let nameInput = searchBtn.parentElement.previousElementSibling.getElementsByTagName('input')[0];
+		let rows = searchBtn.parentElement.parentElement.parentElement.nextElementSibling.getElementsByTagName("tr");
+		searchBtn.addEventListener('click',()=>{
+			if(typeInput.value == '' && nameInput.value == ''){
+				return;
+			}
+			//This is removing also those that has not to be removed
+			Array.from(rows).filter(row => row.classList.contains('more-info')).forEach(r => r.remove());
+
+			console.log(rows);
+			console.log(typeInput.value,nameInput.value);
+		});
+	}
+	addClearFunctionality(){
+
 	}
 }
