@@ -85,13 +85,48 @@ class PublicTransportTable{
 				return;
 			}
 			//This is removing also those that has not to be removed
-			Array.from(rows).filter(row => row.classList.contains('more-info')).forEach(r => r.remove());
-
-			console.log(rows);
-			console.log(typeInput.value,nameInput.value);
+			PublicTransportTable.prototype.hideAdditionalInformation.call(searchBtn,rows);
+		
+			
+			if(typeInput.value != ''){
+				this.showResultingRows(rows,'none',row => {
+					return !row.firstChild.textContent.includes(typeInput.value)
+				});
+			}
+			
+			if(nameInput.value != ''){
+				this.showResultingRows(rows,'none',row => {
+					return !row.firstChild.textContent.includes(nameInput.value)
+				});
+			}
+			
+			
+			
 		});
 	}
+	
 	addClearFunctionality(){
-
+		let clearBtn = document.getElementsByClassName("clear-btn")[0];
+		let rows = clearBtn.parentElement.parentElement.parentElement.nextElementSibling.getElementsByTagName("tr");
+		clearBtn.addEventListener('click',()=>{
+			PublicTransportTable.prototype.hideAdditionalInformation.call(clearBtn,rows);
+			this.showResultingRows(rows,'');
+			Array.from(rows).forEach(r => r.style.display = '');	
+		});
 	}
+	showResultingRows(rows,state,filt){
+		if(typeof filt != 'undefined'){
+			Array.from(rows).filter(filt).forEach(r => r.style.display = state);
+			return;			
+		}
+		Array.from(rows).forEach(r => r.style.display = state);
+	}
+	hideAdditionalInformation(rows){
+		
+		Array.from(rows).filter(row => row.classList.contains('more-info')).forEach(r => {
+				r.previousElementSibling.lastElementChild.firstChild.innerHTML = 'More';
+				r.remove();	
+			});
+	}
+
 }
