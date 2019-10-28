@@ -1,0 +1,32 @@
+<script>
+function processor(args){
+	let solve = (function(){
+		let list = [];
+		return {
+			add : (word) => { 
+					
+					list.push(word);
+				
+			},
+			remove : (word) => { 
+				list = list.filter(w => word != w );
+			},
+			print : () => {console.log(list.join(','));}
+		}
+	})();
+	args.forEach(arg => {
+		arg = arg.split(' ');
+		//console.log(arg);
+		
+		if(arg.length > 1){
+			solve[arg[0]](arg[1]);
+		}else{
+	
+			solve[arg[0]]();
+		}
+		
+	});
+}
+
+processor(['add hello', 'add again', 'remove hello', 'add again', 'print']);
+</script>
