@@ -1,0 +1,25 @@
+<script>
+	function solve (args){
+		args = args.map(arg => {
+			let obj = {
+				width : arg[0],
+				height : arg[1],
+				area : function() { return this.width * this.height },
+				compareTo : function(other){
+								return this.area() - other.area();
+							}
+				} ;
+			return obj;
+		});
+		args = args.sort((a,b) => {
+				let sort = b.compareTo(a);
+				console.log(sort);
+				if(sort == 0){
+					sort = b.width - a.width;
+				}
+			return sort;
+		});
+		return args;
+	}
+	console.log(solve([[10,5], [3,20], [5,12]]));
+</script>
