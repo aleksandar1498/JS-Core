@@ -1,0 +1,65 @@
+<script>
+
+function solve(car){
+	let newObject = Object.create(car).__proto__;
+	replaceCarriage();
+	replacePower();
+	replaceWheels();
+	return newObject;
+	
+	function replaceWheels(){
+		replaceKey('wheelsize','wheels');
+		let wheel = newObject.wheels;
+		console.log(wheel);
+		if(wheel%2 == 0 && wheel != 0){
+			wheel--;
+		}else if(wheel == 0){
+			wheel=1;
+		}
+		let w = ['','','',''];
+		w.fill(wheel);
+		newObject.wheels = w;
+		deleteKey('wheelsize');
+		
+	}
+	function replaceCarriage(){
+		newObject['carriage'] = buildCarriage();
+		deleteKey('color');
+	}
+	function replacePower(){
+		replaceKey('power','engine');
+		newObject['engine'] = buildEngine();
+		deleteKey('power');
+	}
+	function replaceKey(old_key,new_key){
+		Object.defineProperty(newObject,new_key,
+		Object.getOwnPropertyDescriptor(newObject, old_key));
+	}
+	function deleteKey(old_key){
+		delete newObject[old_key];
+	}
+	function buildCarriage(){
+		return {'type': newObject.carriage ,'color': newObject.color}; 
+	}
+	function buildEngine(){
+		let powerEngine = {'power':0,'volume':0}; 
+		if(newObject.power <= 90){
+			powerEngine.power = 90;
+			powerEngine.volume = 1800;
+		}else if(newObject.power <= 120){
+			powerEngine.power = 120;
+			powerEngine.volume = 2400;
+		}else if(newObject.power <= 200){
+			powerEngine.power = 200;
+			powerEngine.volume = 3500;
+		}
+		return powerEngine;
+	}
+}
+solve({ model: 'VW Golf II',
+  power: 90,
+  color: 'blue',
+  carriage: 'hatchback',
+  wheelsize: 14 }
+);
+</script>
