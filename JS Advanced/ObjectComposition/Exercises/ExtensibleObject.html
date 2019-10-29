@@ -1,5 +1,5 @@
 <script>
-let myObj = (function(){
+let myObj = function(){
 	return {
 		extend : function (obj){
 			for(const key of Object.keys(obj)){
@@ -9,12 +9,10 @@ let myObj = (function(){
 					this[key] = obj[key];
 				}
 			}
-			//console.log(Object.getPrototypeOf(this));
-			//console.log(obj)
 		}
 		
 	}
-})();
+};
 console.log(myObj);
 myObj.extend(
 	{

@@ -1,0 +1,58 @@
+<script>
+(function(){
+	String.prototype.ensureStart = function(str){
+		if(!this.startsWith(str)){
+			console.log('in');
+			str = str.concat(this);
+			
+			return str;
+		}
+		return this.toString();
+	}
+	String.prototype.ensureEnd = function(str){
+		if(!this.endsWith(str)){
+			str = this.concat(str);
+			return str;
+		}
+		return this.toString();
+	}
+	String.prototype.isEmpty = function(str){
+		return this.length == 0;
+	}
+	String.prototype.truncate = function(n){
+		if(n < 4){
+			return '.'.repeat(n);
+		}
+		if(n >= this.length){
+			return this.toString();
+		}
+	
+			let lastIndexOfSpace = this.toString().substr(0,n-2).lastIndexOf(' ');
+			if(lastIndexOfSpace > 0){
+				return this.toString().substr(0,lastIndexOfSpace)+'.'.repeat(3);
+			}
+			
+				return this.toString().substr(0,n-3)+''+'.'.repeat(3);
+			
+			
+		
+	}
+	String.format = function(str,...params){
+		let regex = new RegExp('({[0-9]+})','g');
+		let val; 
+		
+		while(val = regex.exec(str)){
+			let index = val[0].replace(/[^0-9]+/gi,'');
+			if(params[index]){
+				str = str.replace(val[0],params[index]);
+			}
+			
+		}
+		return str;
+			
+	}
+})();
+var testString = 'quick brown fox jumps over the lazy dog';
+testString = testString.ensureStart('the ');
+console.log(testString);
+</script>
