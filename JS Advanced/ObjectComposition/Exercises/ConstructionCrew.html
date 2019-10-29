@@ -1,0 +1,11 @@
+<script>
+	function solve(worker){
+		let newObject = Object.create(worker);
+		if(newObject.handsShaking == true){
+			newObject.__proto__.bloodAlcoholLevel = newObject.bloodAlcoholLevel + (0.1 * newObject.weight * newObject.experience);
+			newObject.__proto__.handsShaking = false;
+		}
+		return newObject;
+	}
+	solve({ weight: 80,experience: 1,bloodAlcoholLevel: 0,handsShaking: true });
+</script>
