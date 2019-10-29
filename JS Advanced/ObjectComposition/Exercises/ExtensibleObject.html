@@ -1,0 +1,28 @@
+<script>
+let myObj = (function(){
+	return {
+		extend : function (obj){
+			for(const key of Object.keys(obj)){
+				if(typeof obj[key] == 'function'){
+					Object.getPrototypeOf(this)[key] = obj[key];
+				}else{
+					this[key] = obj[key];
+				}
+			}
+			//console.log(Object.getPrototypeOf(this));
+			//console.log(obj)
+		}
+		
+	}
+})();
+console.log(myObj);
+myObj.extend(
+	{
+	  extensionMethod: function () {
+		//TODO 
+	  },
+	  extensionProperty: 'someString'
+	}
+);
+console.log(myObj);
+</script>
