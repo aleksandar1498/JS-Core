@@ -27,22 +27,32 @@ function loadRepos() {
 
 	req.open("GET", url, true);
 	req.send();*/
+	// testnakov
 	fetch(url)
 	.then((response) => {
 		console.log(response);
+		if(response.status > 400){
+			throw new Error(response.statusText);
+		}
 		return response.json();
+	}
+	)
+	.then((data) => {
+		displayRows(data);
 	})
-	.then((data) => displayRows(data))
 	.catch((error) => displayError(error));
 
-	function displayRows(data){
+	function displayRows(response){
+		console.log(response);
 		for (const data of response) {
+		
 			const repo = createRepo(data.full_name, data.html_url);
 			ul.appendChild(repo);
 		}
 	}
 	function displayError(error){
 		let li = document.createElement('li');
+		
 		li.textContent = error;
 		ul.appendChild(li);
 	}
