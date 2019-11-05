@@ -1,7 +1,8 @@
 function getInfo() {
-    let xhr = new XMLHttpRequest();
+    //let xhr = new XMLHttpRequest();
     let stopId = document.getElementById("stopId").value;
-    xhr.onreadystatechange = function () {
+    let busList = document.getElementById('buses');
+    /*xhr.onreadystatechange = function () {
         if(this.readyState == 4){
             if(this.status == 200){
                 let response = JSON.parse(this.responseText);
@@ -16,17 +17,38 @@ function getInfo() {
     }
     xhr.open("GET",`https://judgetests.firebaseio.com/businfo/${stopId}.json`);
     xhr.send();
-    function changeName(name){
-        document.getElementById("stopName").innerHTML = name;
+    */
+    fetch(`https://judgetests.firebaseio.com/businfo/${stopId}.json`)
+        .then((response) => {
+            if (response.status == 200) {
+                return response.json();
+              
+            }else if(response.status == 404){
+                throw response;
+            }
+         
+        })
+        .then((data) => {
+            changeName(data.name)
+            showArrivingBuses(data.buses);
+        })
+        .catch((error) => displayError());
+
+    function changeName(name) {
+        document.getElementById("stopName").textContent = name;
     }
-    function showArrivingBuses(buses){
-        let busList = document.getElementById('buses');
+    function displayError() {
+        busList.innerHTML = '';
+        changeName("Error");
+    }
+    function showArrivingBuses(buses) {
+       
         console.log(buses);
         for (const busId in buses) {
-            busList.appendChild(createArrivingBusItem(busId,buses[busId]));
+            busList.appendChild(createArrivingBusItem(busId, buses[busId]));
         }
     }
-    function createArrivingBusItem(busId,time){
+    function createArrivingBusItem(busId, time) {
         let li = document.createElement('li');
         li.innerHTML = `Bus ${busId} arrives in ${time}`;
         return li;
