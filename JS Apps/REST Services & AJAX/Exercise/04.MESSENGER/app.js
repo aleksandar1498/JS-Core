@@ -8,6 +8,7 @@ function attachEvents() {
     let messages = document.getElementById("messages");
     submitBtn.addEventListener("click", () => {
         sendMessage(author.value, content.value);
+        refreshMessages();
     });
 
     refreshBtn.addEventListener("click", () => {
@@ -42,7 +43,7 @@ function attachEvents() {
                 let sorted = {};
                 Object.keys(data).sort((a,b) => a.timestamp - b.timestamp).forEach(k => sorted[k] = data[k]);
                 for (const key in sorted) {
-                    messages.append(`${data[key].author}:${data[key].content}\n`);    
+                    messages.append(`${data[key].author}: ${data[key].content}\n`);    
                 }
               
             })
