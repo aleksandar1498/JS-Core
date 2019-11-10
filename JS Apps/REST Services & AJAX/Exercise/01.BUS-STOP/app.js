@@ -1,23 +1,7 @@
 function getInfo() {
-    //let xhr = new XMLHttpRequest();
     let stopId = document.getElementById("stopId").value;
     let busList = document.getElementById('buses');
-    /*xhr.onreadystatechange = function () {
-        if(this.readyState == 4){
-            if(this.status == 200){
-                let response = JSON.parse(this.responseText);
-                changeName(response.name);
-                showArrivingBuses(response.buses)
-            }else{
-                let response = JSON.parse(this.responseText);
-                changeName("Error");
-            }
-            
-        }
-    }
-    xhr.open("GET",`https://judgetests.firebaseio.com/businfo/${stopId}.json`);
-    xhr.send();
-    */
+  
     fetch(`https://judgetests.firebaseio.com/businfo/${stopId}.json`)
         .then((response) => {
             if (response.status == 200) {
@@ -42,8 +26,6 @@ function getInfo() {
         changeName("Error");
     }
     function showArrivingBuses(buses) {
-       
-        console.log(buses);
         for (const busId in buses) {
             busList.appendChild(createArrivingBusItem(busId, buses[busId]));
         }
