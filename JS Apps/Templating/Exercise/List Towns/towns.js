@@ -1,5 +1,4 @@
-$(() => {
-	attachEvents()
+
     function attachEvents() {
 		let btnLoad = document.getElementById("btnLoadTowns");
 		let townsInput = document.getElementById("towns");
@@ -12,4 +11,4 @@ $(() => {
 		});
     }
 
-});
+
