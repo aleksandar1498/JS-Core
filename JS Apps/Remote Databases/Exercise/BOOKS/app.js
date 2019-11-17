@@ -1,4 +1,6 @@
-const baseUrl = "https://baas.kinvey.com/appdata/kid_Bka-PS6jr/books";
+
+import { get, post, put, remove } from './requester.js';
+
 const loadBooksBtn = document.getElementById("loadBooks");
 const tableBody = document.getElementsByTagName("tbody")[0];
 
@@ -6,10 +8,15 @@ let title = document.getElementById("title");
 let author = document.getElementById("author");
 let isbn = document.getElementById("isbn");
 
+let id_edit = document.getElementById("id-edit");
+let title_edit = document.getElementById("title-edit");
+let author_edit = document.getElementById("author-edit");
+let isbn_edit = document.getElementById("isbn-edit");
+
 let submitData = document.querySelector("form button");
 
 loadBooksBtn.addEventListener("click", async function () {
-    let books = await loadBooks();
+    let books = await get("appdata", "books");
     if (books) {
         displayBooks(books);
     }
@@ -41,10 +48,10 @@ function generateBookRow(book) {
     editButton.innerHTML = "Edit";
     editButton.addEventListener("click", async function (evt) {
         evt.stopPropagation();
-        await editBook(book._id,{
-            "title": title.value,
-            "author": author.value,
-            "isbn": isbn.value
+        await editBook(id_edit.value, {
+            "title": title_edit.value,
+            "author": author_edit.value,
+            "isbn": isbn_edit.value
         });
         loadBooksBtn.click();
     });
@@ -60,10 +67,10 @@ function generateBookRow(book) {
     buttonColumn.appendChild(deleteButton);
 
     tr.addEventListener("click", function () {
-
-        title.value = titleColumn.innerHTML;
-        author.value = authorColumn.innerHTML;
-        isbn.value = isbnColumn.innerHTML;
+        id_edit.value = book._id;
+        title_edit.value = titleColumn.innerHTML;
+        author_edit.value = authorColumn.innerHTML;
+        isbn_edit.value = isbnColumn.innerHTML;
     });
 
     tr.appendChild(titleColumn);
@@ -75,25 +82,7 @@ function generateBookRow(book) {
 
 }
 function deleteBook(id) {
-    return fetch(baseUrl + "/" + id, {
-        method: "DELETE",
-        headers: {
-            "Authorization": "Basic Z3Vlc3Q6Z3Vlc3Q=",
-            "Content-Type": "application/json",
-        }
-    }).then(res => {
-        console.log(res);
-        return res.json();
-    });
-}
-function loadBooks() {
-    return fetch(baseUrl, {
-        method: "get",
-        headers: {
-            "Authorization": "Basic Z3Vlc3Q6Z3Vlc3Q=",
-            "Content-Type": "application/json",
-        }
-    }).then(res => res.json());
+    return remove("appdata", "books", id);
 }
 
 submitData.addEventListener("click", async function (evt) {
@@ -111,25 +100,8 @@ submitData.addEventListener("click", async function (evt) {
 });
 
 function addBook(bodyData) {
-    console.log(JSON.stringify(bodyData));
-    return fetch(baseUrl, {
-        method: "POST",
-        headers: {
-            "Authorization": "Basic Z3Vlc3Q6Z3Vlc3Q=",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bodyData)
-    }).then(res => res.json());
+    return post("appdata", "books", bodyData);
 }
-function editBook(id,bodyData) {
-    console.log(id);
-    console.log(JSON.stringify(bodyData));
-   return fetch(baseUrl+"/"+id, {
-        method: "PUT",
-        headers: {
-            "Authorization": "Basic Z3Vlc3Q6Z3Vlc3Q=",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bodyData)
-    }).then(res => res.json());
+function editBook(id, bodyData) {
+    return put("appdata","books",id,bodyData);
 }
