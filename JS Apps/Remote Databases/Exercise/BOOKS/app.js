@@ -59,8 +59,11 @@ function generateBookRow(book) {
     deleteButton.innerHTML = "Delete";
     deleteButton.addEventListener("click", async function (evt) {
         evt.stopPropagation();
-        await deleteBook(book._id);
-        loadBooksBtn.click();
+        if(confirm("Are you sure")){
+            await deleteBook(book._id);
+            loadBooksBtn.click();
+        }
+        
     });
 
     buttonColumn.appendChild(editButton);
