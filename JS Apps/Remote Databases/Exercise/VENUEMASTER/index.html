@@ -5,17 +5,18 @@
     <meta charset="UTF-8">
     <title>Venue Master</title>
     <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.js"></script>
 </head>
 
 <body>
     <div id="content">
         <div id="date-control">
-            <input type="text" id="venueDate" placeholder="Enter date">
+            <input type="text" id="venueDate" placeholder="Enter date" value="23-11">
             <input type="button" id="getVenues" value="List Venues">
         </div>
         <div id="venue-info"></div>
     </div>
-    <script src="app.js"></script>
+    <script src="app.js" type="module"></script>
 </body>
 
 </html>
