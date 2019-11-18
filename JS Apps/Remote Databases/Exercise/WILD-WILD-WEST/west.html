@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Wild Wild West</title>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.js"></script>
     <script src="loadCanvas.js"></script>
     <script src="attachEvents.js"></script>
     <link href="./styles.css" rel="stylesheet" type="text/css" />
@@ -25,6 +26,17 @@
     <input type="text" id="addName">
     <button id="addPlayer">Add Player</button>
 </fieldset>
+<script id="playerModule" type="text/x-handlebars-template">
+{{#each players}}
+<div class="player" id="{{_id}}">
+	<p><b>Name :</b> {{name}}</p>
+	<p><b>Money :</b> {{money}}</p>
+	<p><b>Bullets :</b> {{bullets}}</p>
+	<button class="play" >Play</button>
+	<button class="delete" >Delete</button>
+</div>
+{{/each}}
+</script>
 <script>
     $(document).ready(attachEvents);
 </script>
