@@ -13,14 +13,21 @@ let playersSource;
 function attachEvents() {
 	playersSource = document.getElementById("playerModule");
 	loadPlayers();
-	$("#addPlayer").on('click',persistPlayer);
+	 $("#addPlayer").on('click',persistPlayer);
+	
    // loadCanvas({name:"Alex",money:650,bullets:6})
 }
 async function loadPlayers(){
+	console.log("called");
 	const players = await get("appdata","players");
 	const template = Handlebars.compile(playersSource.innerHTML);
 	let htmlToAdd = template({players});
 	document.getElementById("players").innerHTML = htmlToAdd;
+	 loadPlayerEvents();
+}
+function loadPlayerEvents(){
+	$(".delete").on('click',deletePlayer);
+	$(".play").on('click',playerStart);
 }
 async function persistPlayer(evt){
 	const current = evt.target;
@@ -34,8 +41,41 @@ async function persistPlayer(evt){
 		money : DEFAULT_INITIAL_MONEY,
 		bullets : DEFAULT_BULLET_COUNT
 	};
+	
 	await post("appdata","players",player);
+	playerName.value = '';
 	loadPlayers();
+}
+async function deletePlayer(evt){
+	console.log("clicked");
+	const current = evt.target;
+	const playerId = current.parentElement;
+	console.log(playerId.id);
+	
+	if(playerId.id == false){
+		return;
+	}
+	
+	await remove("appdata","players",playerId.id);
+	loadPlayers();
+}
+function playerStart(evt){
+	let current = evt.target;
+	console.log(current);
+	let values = current.parentElement.getElementsByTagName("p");
+	let name = values[0].textContent.replace('Name :','').trim();
+	let money = Number(values[1].textContent.replace('Money :','').trim());
+	let bullets = Number(values[2].textContent.replace('Bullets :','').trim());
+	let player = {name,money,bullets};
+	loadCanvas(player);
+	showBattlefield();
+	
+}
+
+function showBattlefield(){
+	$("#save").css("display","block");
+	$("#reload").css("display","block");
+	$("#canvas").css("display","block");
 }
 
 // CONFIGURATION FOR HTTP Requests
