@@ -39,7 +39,11 @@ let auth = (() => {
     }
 
     function handleError(reason) {
-        showError(reason.responseJSON.description);
+        if(!reason.ok){
+            throw new Error(reason.statusText);
+        }
+        return reason;
+        
     }
 
     function showInfo(message) {
