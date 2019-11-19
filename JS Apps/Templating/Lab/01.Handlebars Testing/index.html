@@ -1,0 +1,25 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<script id="template" type="text/x-handlebars-template"> 
+{{#each contacts}}
+<div>{{this.name}} & {{this.message}}</div>
+{{/each}}
+
+</script>
+<script>
+let source = document.getElementById("template").innerHTML;
+let template = Handlebars.compile(source);
+let contextData = {
+contacts : [{name : "Marco" , message : "lecca ano"},{name : "Marco" , message : "lecca ano"},{name : "Marco" , message : "lecca ano"}]
+
+}
+let html = template(contextData);
+document.getElementsByTagName("body")[0].innerHTML = html;
+
+</script>
+</body>
+</html>

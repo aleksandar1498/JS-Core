@@ -7,6 +7,7 @@ canvas {
     display: inline-table;
     border: 2px solid lightgray;
     padding: 5px;
+	min-width:8em;
 }
 
 .play, .delete {

@@ -1,7 +1,7 @@
 function loadCanvas(player){
     let canvas = document.getElementById("canvas");
     let ctx = canvas.getContext("2d");
-
+	console.log("LOading canvas");
     let background = new Image();
     let target = new Image();
     let sight = new Image();
@@ -9,7 +9,7 @@ function loadCanvas(player){
     ctx.font = "24px serif";
     ctx.fillStyle="yellow";
 
-    let targetObj= { speed: 50, x: 0, y:100, width:300, height:500 };
+    let targetObj= { speed: 10, x: 0, y:100, width:300, height:500 };
     let mouse = { x: 0, y:100 };
 
     background.src = "imgs/west.jpg";
@@ -68,7 +68,7 @@ function loadCanvas(player){
     });
 
     //Set a property in the Canvas to allow for cleaning the interval from outside
-    canvas.intervalId = setInterval(moveTarget,100);
+    canvas.intervalId = setInterval(moveTarget,40);
 
     function moveTarget(){
         if(targetObj.speed > 0 && targetObj.x + targetObj.width >= canvas.width){
