@@ -36,20 +36,15 @@
       const username = context.params.username;
       const password = context.params.password;
       const repeatPassword = context.params.repeatPassword;
-      auth
-      .register(username,password,repeatPassword)
-      .then(auth.handleError)
-      .then(success => function() {
-        console.log("success");
-        auth.showInfo();
-        context.redirect("#/login");
-        
-      })
-      .catch(err => {
-        console.log(err)
-        auth.showError("A user with this Username already exists/ check password if are same");
-      });
-     
+     auth.register(username,password,repeatPassword)
+	 .then(auth.handleError)
+	 .then(res => {
+		 context.redirect("#/login");
+	 }).catch(err => {
+		 auth.showError(err)
+	 });
+	 
+		
       
     });
     
@@ -57,7 +52,7 @@
   });
 
   $(function () {
-    app.run('#/home');
+    app.run('index.html#/home');
   });
 
 })(jQuery);
