@@ -1,58 +1,103 @@
-(function ($) {
-  // load login template
-  fetch('../templates/login/loginForm.hbs')
-  .then(res => res.text())
-  .then(data =>  Handlebars.registerPartial('loginForm',data));
-// load register template
-  fetch('../templates/register/registerForm.hbs')
-  .then(res => res.text())
-  .then(data =>  Handlebars.registerPartial('registerForm',data));
+const HANDLERS = {};
 
-  Handlebars.registerPartial('header', '{{username}} {{loggedIn}}');
-  Handlebars.registerPartial('footer', '{{username}} {{loggedIn}}');
- 
-
-
-  var app = $.sammy('#main', function () {
-    this.use("Handlebars", 'hbs')
-    this.get('#/home', function (context) {
-      
-      this.partial('../templates/home/home.hbs');
-    });
-    this.get("#/login", function () {
-     
-      this.partial('../templates/login/loginPage.hbs');
-    });
-    this.post("#/login",function({params}){
-      const username = params.username;
-      const password = params.password;
-      console.log(username,password);
-    });
-    this.get("#/register", function () {
-     
-      this.partial('../templates/register/registerPage.hbs');
-    });
-    this.post("#/register",function(context){
-      const username = context.params.username;
-      const password = context.params.password;
-      const repeatPassword = context.params.repeatPassword;
-     auth.register(username,password,repeatPassword)
-	 .then(auth.handleError)
-	 .then(res => {
-		 context.redirect("#/login");
-	 }).catch(err => {
-		 auth.showError(err)
-	 });
-	 
+$(() => {
+	var app = $.sammy('#main', function () {
 		
-      
-    });
+    this.use("Handlebars", 'hbs');
+	
+    this.get('#/home', HANDLERS.homeHandler);
+    this.get("#/login", HANDLERS.loginGET);
+    this.post("#/login",HANDLERS.loginPOST);
+	this.get("#/logout",HANDLERS.logoutGET);
+	this.get("#/about",HANDLERS.aboutGET);
+	
+    /*this.get("#/register", HANDLERS.registerGet);
+    this.post("#/register",HANDLERS.registerPOST);*/
     
 
   });
 
-  $(function () {
+ 
     app.run('index.html#/home');
-  });
+  
 
-})(jQuery);
+});
+
+// AUTH HANDLERS
+HANDLERS.homeHandler = function(){
+	this.loggedIn = auth.isAuth();
+	this.username = sessionStorage.getItem('username');
+	this.loadPartials({
+		header: '../templates/common/header.hbs',
+        footer: '../templates/common/footer.hbs',
+	}).then(function (){
+		
+		this.partial('../templates/home/home.hbs');
+	});
+}
+HANDLERS.registerGet = function (){
+	this.loadPartials({
+		header: '../templates/common/header.hbs',
+        footer: '../templates/common/footer.hbs',
+		
+	}).then(function (){
+		this.partial('../templates/register/registerPage.hbs');
+	});
+}
+
+HANDLERS.registerPOST = function (context){
+	const username = context.params.username;
+    const password = context.params.password;
+      const repeatPassword = context.params.repeatPassword;
+	  if(password !== repeatPassword){
+		  alert("Passwords does not match");
+		  return;
+	  }
+     auth.register(username,password,repeatPassword);
+	 
+}
+
+HANDLERS.loginGET = function(){
+	this.loadPartials({
+		header: '../templates/common/header.hbs',
+        footer: '../templates/common/footer.hbs',
+		loginForm: '../templates/login/loginForm.hbs',
+	}).then(function (){
+		 this.partial('../templates/login/loginPage.hbs');
+	});
+	
+}
+
+HANDLERS.loginPOST = function(context){
+	  const username = context.params.username;
+      const password = context.params.password;
+	  auth.login(username,password)
+	  .then(auth.handleError)
+	  .then(res => res.json())
+	  .then(userInfo => {
+		  auth.saveSession(userInfo);
+		  this.redirect("#/home");
+	  })
+	  .catch(err => {
+		 auth.showError(err)
+	  });
+}
+
+HANDLERS.logoutGET = function(){
+	let that = this;
+	auth
+	.logout()
+	.then(function(){
+		that.redirect("#/home");
+	});
+}
+
+HANDLERS.aboutGET = function(){
+	this.loadPartials({
+		header: '../templates/common/header.hbs',
+        footer: '../templates/common/footer.hbs',
+	}).then(function (){
+		 this.partial('../templates/about/about.hbs');
+	});
+}
+

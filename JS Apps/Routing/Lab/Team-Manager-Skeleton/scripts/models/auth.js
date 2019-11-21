@@ -1,4 +1,7 @@
 let auth = (() => {
+	function isAuth(){
+		return sessionStorage.getItem('authtoken') !== null;
+	}
     function saveSession(userInfo) {
         let userAuth = userInfo._kmd.authtoken;
         sessionStorage.setItem('authtoken', userAuth);
@@ -34,7 +37,9 @@ let auth = (() => {
         let logoutData = {
             authtoken: sessionStorage.getItem('authtoken')
         };
-
+		console.log(logoutData);
+		sessionStorage.removeItem('authtoken');
+		console.log(logoutData);
         return requester.post('user', '_logout', 'kinvey', logoutData);
     }
 
@@ -61,6 +66,7 @@ let auth = (() => {
     }
 
     return {
+		isAuth,
         login,
         register,
         logout,

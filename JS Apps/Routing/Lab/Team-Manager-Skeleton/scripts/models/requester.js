@@ -4,7 +4,7 @@ let requester = (() => {
     const kinveyAppSecret = "095bdc1164c24d9d865cfad4086e4357";
     function makeAuth(type) {
         return type === 'basic'
-            ?  'Basic ' + btoa(kinveyAppKey + ':' + kinveyAppSecret)
+            ?  `Basic ${btoa(`${kinveyAppKey}:${kinveyAppSecret}`)}`
             :  'Kinvey ' + sessionStorage.getItem('authtoken');
     }
 
@@ -23,7 +23,7 @@ let requester = (() => {
         let req = {
             method,
             headers: {
-               "Authorization" : `Basic ${btoa(`${kinveyAppKey}:${kinveyAppSecret}`)}`,
+               "Authorization" : makeAuth(auth),
             "Content-Type" : "application/json"
 		   },
         };
@@ -41,7 +41,6 @@ let requester = (() => {
     function post (module, endpoint, auth, data) {
         const url = kinveyBaseUrl + module + '/' + kinveyAppKey + '/' + endpoint;
 		let header = makeHeader('POST', module, endpoint, auth,data);
-		console.log(header);
         return fetch(url,header);
     }
 
