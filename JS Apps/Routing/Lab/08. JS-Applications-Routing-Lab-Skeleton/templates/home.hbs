@@ -1,0 +1,8 @@
+{{> header}}
+ {{#if loggedIn}}
+	<h1>Welcome back Mr. {{username}}</h1>
+	<h3>30% discount for every 100$ spent</h3>
+ {{else}}
+	{{> loginPage}}
+ {{/if}}
+{{> footer}}
