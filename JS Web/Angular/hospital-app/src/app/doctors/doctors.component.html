@@ -9,12 +9,12 @@
     </thead>
     <tbody>
         <tr *ngFor="let doctor of doctors">
-            <td>{{doctor.id}}</td>
+            <td>{{doctor._id}}</td>
             <td>{{doctor.name}}</td>
             <td>{{doctor.rating}}</td>
             <td>{{doctor.active}}</td>
-            <td><button (click)="toggleStatus(doctor.id)">Change State</button></td>
-            <td><button (click)="remove(doctor.id)">Remove</button></td>
+            <td><button (click)="toggleStatus(doctor._id)">Change State</button></td>
+            <td><button (click)="remove(doctor._id)">Remove</button></td>
         </tr>
         
     </tbody>

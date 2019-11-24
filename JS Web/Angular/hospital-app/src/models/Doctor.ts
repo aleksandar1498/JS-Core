@@ -1,11 +1,11 @@
 export class Doctor {
-    id: number;
+    _id: number;
     name: string;
     rating: number;
     active: boolean;
 
     constructor(id: number, name: string, rating: number, active: boolean) {
-        this.id = id;
+        this._id = id;
         this.name = name;
         this.rating = rating;
         this.active = active;

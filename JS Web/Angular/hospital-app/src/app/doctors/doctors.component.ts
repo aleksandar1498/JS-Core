@@ -24,7 +24,9 @@ export class DoctorsComponent implements OnInit {
 
 
   remove(id: number) {
-    this.service.remove(id);
+    this.service.remove(id).subscribe(x => {
+      console.log(x);
+    });
     this.service.getAllDoctors().subscribe(x => {
       this.doctors = x;
     });;
