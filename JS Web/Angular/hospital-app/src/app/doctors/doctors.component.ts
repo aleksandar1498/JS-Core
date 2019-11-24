@@ -16,18 +16,18 @@ export class DoctorsComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.service.getAllDoctors().subscribe(x => {
-     console.log(x);
-   });
-   // this.doctors = this.service.getAllDoctors();
+    this.service.getAllDoctors().subscribe(x => {
+      this.doctors = x;
+    });
+    // this.doctors = this.service.getAllDoctors();
   }
 
-  toggleStatus(id: number) {
-    this.service.toggleStatus(id);
-  }
+
   remove(id: number) {
     this.service.remove(id);
-   // this.doctors = this.service.getAllDoctors();
+    this.service.getAllDoctors().subscribe(x => {
+      this.doctors = x;
+    });;
   }
 
 }

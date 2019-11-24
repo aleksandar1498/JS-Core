@@ -8,16 +8,11 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DoctorService {
-  doctors: Doctor[];
+ 
   private username = "alex";
   private password = "alex"
   constructor(private http: HttpClient) {
-    this.doctors = [
-      new Doctor(101, "Alex", 4, true),
-      new Doctor(102, "Vesi", 1, true),
-      new Doctor(103, "Prova", 2, true),
-      new Doctor(104, "Test", 4, false)
-    ];
+    
   }
 
   getAllDoctors(): Observable<Doctor[]> {
@@ -35,15 +30,10 @@ export class DoctorService {
       return doctors;
     }));
   }
-  toggleStatus(id: number) {
-    let doc = this.doctors.find(d => d.id === id);
-    if (doc) {
-      doc.toggleStatus();
-    }
-  }
+  
 
   remove(id: number) {
-    this.doctors = this.doctors.filter(d => d.id != id);
+    this.http.delete(`https://baas.kinvey.com/appdata/kid_ByY4kawhB/doctors/${id}`);
   }
 
 }
