@@ -8,7 +8,7 @@
         <th style="column-span: 2;">Actions</th>
     </thead>
     <tbody>
-        <tr *ngFor="let doctor of doctors">
+        <tr *ngFor="let doctor of doctors" (click)="onSelect(doctor)">
             <td>{{doctor._id}}</td>
             <td>{{doctor.name}}</td>
             <td>{{doctor.rating}}</td>
@@ -19,3 +19,4 @@
         
     </tbody>
 </table>
+<app-doctor-details [selectedDoctor]="selectedDoctor"></app-doctor-details>

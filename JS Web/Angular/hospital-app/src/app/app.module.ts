@@ -8,18 +8,22 @@ import { DoctorsComponent } from './doctors/doctors.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule }    from '@angular/common/http';
+import { DoctorDetailsComponent } from './doctor-details/doctor-details.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
     PatientsComponent,
     DoctorsComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    DoctorDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

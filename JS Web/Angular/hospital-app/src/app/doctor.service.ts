@@ -10,7 +10,8 @@ import { HttpClient } from '@angular/common/http';
 export class DoctorService {
 
   private username = "alex";
-  private password = "alex"
+  private password = "alex";
+ 
   constructor(private http: HttpClient) {
 
   }
@@ -33,7 +34,6 @@ export class DoctorService {
 
   remove(id: number) {
     console.log(id);
-
     return this.http.delete(`https://baas.kinvey.com/appdata/kid_ByY4kawhB/doctors/${id}`, {
       headers: {
         "Content-Type": "application/json",
@@ -41,5 +41,6 @@ export class DoctorService {
       }
     });
   }
+ 
 
 }

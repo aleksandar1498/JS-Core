@@ -9,7 +9,7 @@ import { DoctorService } from '../doctor.service';
 })
 export class DoctorsComponent implements OnInit {
   doctors: Doctor[];
-
+  selectedDoctor:Doctor;
   constructor(private service: DoctorService) {
 
 
@@ -30,6 +30,9 @@ export class DoctorsComponent implements OnInit {
     this.service.getAllDoctors().subscribe(x => {
       this.doctors = x;
     });;
+  }
+  onSelect(doctor:Doctor){
+    this.selectedDoctor = doctor;
   }
 
 }
