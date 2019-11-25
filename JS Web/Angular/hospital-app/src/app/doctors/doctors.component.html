@@ -1,0 +1,22 @@
+<h1>Doctors Page</h1>
+<table>
+    <thead>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Rating</th>
+        <th>Status</th>
+        <th style="column-span: 2;">Actions</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let doctor of doctors" (click)="onSelect(doctor)">
+            <td>{{doctor._id}}</td>
+            <td>{{doctor.name}}</td>
+            <td>{{doctor.rating}}</td>
+            <td>{{doctor.active}}</td>
+            <td><button (click)="toggleStatus(doctor._id)">Change State</button></td>
+            <td><button (click)="remove(doctor._id)">Remove</button></td>
+        </tr>
+        
+    </tbody>
+</table>
+<app-doctor-details [selectedDoctor]="selectedDoctor"></app-doctor-details>

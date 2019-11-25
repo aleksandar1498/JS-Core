@@ -1,0 +1,17 @@
+<div *ngIf="selectedDoctor">
+
+    <h2>{{selectedDoctor.name | uppercase}} Details</h2>
+    <div><span>id: </span>{{selectedDoctor.id}}</div>
+    <div>
+        <label>name:
+            <input [(ngModel)]="selectedDoctor.name" placeholder="name" />
+        </label>
+        <label>rating:
+            <input [(ngModel)]="selectedDoctor.rating" placeholder="rating" />
+        </label>
+        <label>active:
+            <input [(ngModel)]="selectedDoctor.active" placeholder="active" />
+        </label>
+    </div>
+
+</div>
