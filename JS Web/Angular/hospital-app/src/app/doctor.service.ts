@@ -9,9 +9,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DoctorService {
 
+
   private username = "alex";
   private password = "alex";
- 
   constructor(private http: HttpClient) {
 
   }
@@ -41,6 +41,18 @@ export class DoctorService {
       }
     });
   }
- 
+
+  updateDoctor(selectedDoctor: Doctor) {
+
+    console.log("SERVICE", selectedDoctor);
+    return this.http.put(`https://baas.kinvey.com/appdata/kid_ByY4kawhB/doctors/${selectedDoctor._id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Basic ${btoa(`${this.username}:${this.password}`)}`
+      },
+      body: JSON.stringify(selectedDoctor)
+    });
+  }
+
 
 }

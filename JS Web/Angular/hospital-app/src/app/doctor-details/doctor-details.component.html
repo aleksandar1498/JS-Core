@@ -2,16 +2,17 @@
 
     <h2>{{selectedDoctor.name | uppercase}} Details</h2>
     <div><span>id: </span>{{selectedDoctor.id}}</div>
-    <div>
+    <form (submit)="onSubmit()">
         <label>name:
-            <input [(ngModel)]="selectedDoctor.name" placeholder="name" />
+            <input [(ngModel)]="selectedDoctor.name" placeholder="name" name="name" />
         </label>
         <label>rating:
-            <input [(ngModel)]="selectedDoctor.rating" placeholder="rating" />
+            <input [(ngModel)]="selectedDoctor.rating" type="number" placeholder="rating"  name="rating" />
         </label>
-        <label>active:
-            <input [(ngModel)]="selectedDoctor.active" placeholder="active" />
+        <label>active: 
+            <input [(ngModel)]="selectedDoctor.active" type="boolean" placeholder="active"  name="active" />
         </label>
-    </div>
+        <button type="submit">UPDATE</button>
+    </form>
 
 </div>
