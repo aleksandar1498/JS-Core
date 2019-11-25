@@ -33,7 +33,7 @@ let teamsService = (() => {
             username: sessionStorage.getItem('username'),
             teamId: teamId
         };
-
+		sessionStorage.setItem('teamId',teamId)
         return requester.update('user', sessionStorage.getItem('userId'), 'kinvey', userData);
     }
 
@@ -42,8 +42,8 @@ let teamsService = (() => {
             username: sessionStorage.getItem('username'),
             teamId: ''
         };
-
-       return requester.update('user', sessionStorage.getItem('userId'), userData, 'kinvey');
+		sessionStorage.removeItem('teamId')
+       return requester.remove('user', sessionStorage.getItem('userId'), userData, 'basic');
     }
 
 
