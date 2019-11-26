@@ -46,9 +46,9 @@ let requester = (() => {
 
     // Function to return PUT promise
     function update (module, endpoint, auth, data) {
-        let req = makeRequest('PUT', module, endpoint, auth);
-       
-        return $.ajax(req);
+        const url = kinveyBaseUrl + module + '/' + kinveyAppKey + '/' + endpoint;
+		let header = makeHeader('PUT', module, endpoint, auth,data);
+        return fetch(url,header);
     }
 
     // Function to return DELETE promise

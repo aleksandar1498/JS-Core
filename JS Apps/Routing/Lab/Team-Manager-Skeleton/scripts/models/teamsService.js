@@ -14,7 +14,8 @@ let teamsService = (() => {
             comment: description,
             author: sessionStorage.getItem('username')
         };
-
+		console.log(teamData);
+		console.log(teamId);
         return requester.update('appdata', 'teams/' + teamId, 'kinvey', teamData);
     }
 
@@ -42,8 +43,8 @@ let teamsService = (() => {
             username: sessionStorage.getItem('username'),
             teamId: ''
         };
-		sessionStorage.removeItem('teamId')
-       return requester.remove('user', sessionStorage.getItem('userId'), userData, 'basic');
+	   sessionStorage.removeItem('teamId')
+       return requester.update('user', sessionStorage.getItem('userId'), userData, 'kinvey');
     }
 
 
