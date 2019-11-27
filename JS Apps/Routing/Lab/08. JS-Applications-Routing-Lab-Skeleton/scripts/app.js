@@ -11,8 +11,6 @@ $(() =>{
 			this.username = sessionStorage.getItem("username");
 			this.loadPartials({
 				header : '../templates/header.hbs',
-				loginForm : '../templates/loginForm.hbs',
-				loginPage : '../templates/login.hbs',
 				footer : '../templates/footer.hbs',
 				
 			}).then(function(){
