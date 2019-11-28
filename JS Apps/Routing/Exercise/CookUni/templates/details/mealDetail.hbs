@@ -3,21 +3,21 @@
 		<div class="col-md-12">
 			<div class="recepieInfo">
 				<div class="detailsFoodImage">
-					<img src="{{this.foodImageURL}}"
+					<img src="{{foodImageURL}}"
 						alt="">
 				</div>
 
 				<div class="infoPack">
 					<h3 class="my-3">Meal Name</h3>
-					<p class="prep-method">{{this.prepMethod}}</p>
-					<p class="description">{{this.description}}</p>
+					<p class="prep-method">{{prepMethod}}</p>
+					<p class="description">{{description}}</p>
 				</div>
 				<div class="actions">
 				{{#if isAuthor}}
-					<a class="btn btn-danger" href="#delete/{{this._id}}">Archive</a>
-					<a class="btn btn-info" href="#/edit/{{this._id}}">Edit</a>
+					<a class="btn btn-danger" href="#delete/{{id}}">Archive</a>
+					<a class="btn btn-info" href="#/edit/{{id}}">Edit</a>
 				{{else}}
-					<a class="btn btn-success" href="#/like/{{this._id}}"> {{this.likesCounter}} likes</a>
+					<a class="btn btn-success" href="#/like/{{id}}"> {{likesCounter}} likes</a>
 				{{/if}}
 				   
 				   

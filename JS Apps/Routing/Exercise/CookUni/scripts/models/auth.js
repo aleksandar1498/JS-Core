@@ -40,6 +40,7 @@ let auth = (() => {
         let logoutData = {
             authtoken: sessionStorage.getItem('authtoken')
         };
+		sessionStorage.removeItem('userId');
 		sessionStorage.removeItem('firstName');
 		sessionStorage.removeItem('authtoken');
 		sessionStorage.removeItem('username');

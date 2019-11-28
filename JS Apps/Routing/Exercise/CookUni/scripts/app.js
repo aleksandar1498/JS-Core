@@ -17,7 +17,9 @@ $(()=>{
 		this.get('#/share',HANDLERS.shareGet);
 		this.post('#/share',HANDLERS.sharePost);
 		
-		this.get("/#details/:id",HANDLERS.mealDetailsGet);
+		this.get("#/details/:id",HANDLERS.mealDetailsGet);
+		
+		this.get("#/like/:id",HANDLERS.like);
 	});
 	
 	app.run('index.html#/');
@@ -86,6 +88,8 @@ HANDLERS.loginPost = function(ctx){
 				
 				auth.showInfo('Logged Successfully');
 				$("#loadingBox").hide();
+			
+				sessionStorage.setItem('userId',data._id);
 				sessionStorage.setItem('username',data.username);
 				sessionStorage.setItem('firstName',data.firstName);
 				sessionStorage.setItem('lastName',data.lastName);
@@ -192,12 +196,57 @@ HANDLERS.sharePost = function(ctx){
 	});
 }
 
-HANDLERS.mealDetailsGet = function(ctx){
-	console.log(ctx);
+HANDLERS.mealDetailsGet = async function(ctx){
+	$("#loadingBox").show();
+	let res = await requester.get('appdata','recipes/'+ctx.params.id,'kinvey');
+	console.log(res);
+	$("#loadingBox").hide();
+	this.loadPartials({
+		header : '../templates/common/header.hbs',
+		notification : '../templates/messages/notification.hbs',
+		footer : '../templates/common/footer.hbs'
+	}).then(function(){
+			ctx.loggedIn = auth.isAuth();
+			ctx.id = res._id;
+			ctx.meal = res.meal;
+			ctx.ingredients = res.ingredients;
+			ctx.prepMethod = res.prepMethod;
+			ctx.description = res.description;
+			ctx.category = res.category;
+			ctx.foodImageURL = res.foodImageURL;
+			ctx.likesCounter = res.likesCounter;
+			ctx.isAuthor = res._acl.creator == sessionStorage.getItem('userId');
+			ctx.names = sessionStorage.getItem('firstName')+" "+sessionStorage.getItem('lastName');
+			console.log(ctx);
+			this.partial('../templates/details/mealDetail.hbs');
+		});
+	
 };
 
+HANDLERS.like =async function(ctx){
+	$("#loadingBox").show();
+	let {_id,meal,category,description,foodImageURL,ingredients,likesCounter,prepMethod} = await requester.get('appdata','recipes/'+ctx.params.id,'kinvey');
+	let id = _id;
+	likesCounter = (Number(likesCounter)+1)+"";
+	let objectToPass = {
+		meal,category,description,foodImageURL,ingredients,likesCounter,prepMethod
+	}
+	requester.update('appdata', 'recipes/'+id, 'kinvey', objectToPass)
+	.then(res => {
+		$("#loadingBox").hide();
+		if(!res.ok){
+			throw new Error(res.statusText);
+		}
+		auth.showInfo("Liked!");
+		ctx.redirect("#/details/"+id);
+	})
+	.catch(err => {
+		auth.showError(err);
+	});
+}
 
 
 
+//"5dde7fe0956adb00184a1b83"
 
 
