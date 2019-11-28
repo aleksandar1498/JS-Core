@@ -1,6 +1,7 @@
 const HANDLERS = {};
 
 $(()=>{
+	
 	var app = $.sammy('#rooter',function(){
 		
 		this.use('Handlebars','hbs');
@@ -20,6 +21,11 @@ $(()=>{
 		this.get("#/details/:id",HANDLERS.mealDetailsGet);
 		
 		this.get("#/like/:id",HANDLERS.like);
+		
+		this.get("#/delete/:id",HANDLERS.archiveMealGet);
+		
+		this.get("#/edit/:id",HANDLERS.editMealGet);
+		this.post("#/edit/:id",HANDLERS.editMealPost);
 	});
 	
 	app.run('index.html#/');
@@ -217,7 +223,6 @@ HANDLERS.mealDetailsGet = async function(ctx){
 			ctx.likesCounter = res.likesCounter;
 			ctx.isAuthor = res._acl.creator == sessionStorage.getItem('userId');
 			ctx.names = sessionStorage.getItem('firstName')+" "+sessionStorage.getItem('lastName');
-			console.log(ctx);
 			this.partial('../templates/details/mealDetail.hbs');
 		});
 	
@@ -245,7 +250,66 @@ HANDLERS.like =async function(ctx){
 	});
 }
 
+HANDLERS.editMealGet =async function(ctx){
+	$("#loadingBox").show();
+	
+	let res = await requester.get('appdata','recipes/'+ctx.params.id,'kinvey');
+	let id = res._id;
+	ctx.loadPartials({
+		header : '../templates/common/header.hbs',
+		notification : '../templates/messages/notification.hbs',
+		footer : '../templates/common/footer.hbs'
+	})
+	.then(function(){
+		ctx.id = id;
+		console.log(ctx);
+		ctx.result = res;
+		console.log(ctx.result);
+		$("#loadingBox").hide();
+		this.partial('../templates/edit/editRecipe.hbs');
+	})
+	.catch(err =>{
+		console.log(err);
+	});
+}
 
+HANDLERS.archiveMealGet =async function(ctx){
+	$("#loadingBox").show();
+	let id = ctx.params.id;
+	try{
+		let res = await requester
+		.remove('appdata', 'recipes/'+id, 'kinvey');
+		if(!res['count']){
+			throw new Error(res.statusText);
+		}
+		ctx.redirect('#/');
+	}catch(err ){
+		
+		auth.showError(err);
+	};
+}
+
+HANDLERS.editMealPost = function(ctx){
+	$("#loadingBox").show();
+	let newObject = ctx.params;
+	let id = ctx.params.id;
+	
+	newObject.ingredients = newObject.ingredients.split(',');
+	requester.update('appdata', 'recipes/'+id, 'kinvey', newObject)
+	.then(res => {
+		$("#loadingBox").hide();
+		if(!res.ok){
+			throw new Error(res.statusText);
+		}
+		auth.showInfo("Edited!");
+		ctx.redirect("#/details/"+id);
+	})
+	.catch(err => {
+		auth.showError(err);
+	});
+	
+	
+}
 
 //"5dde7fe0956adb00184a1b83"
 
