@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Doctor } from 'src/models/Doctor';
 import { DoctorService } from '../doctor.service';
 
@@ -6,6 +6,9 @@ import { DoctorService } from '../doctor.service';
   selector: 'app-doctors',
   templateUrl: './doctors.component.html',
   styleUrls: ['./doctors.component.css']
+})
+@Injectable({
+  providedIn: 'root'
 })
 export class DoctorsComponent implements OnInit {
   doctors: Doctor[];
@@ -23,13 +26,11 @@ export class DoctorsComponent implements OnInit {
   }
 
 
-  remove(id: number) {
-    this.service.remove(id).subscribe(x => {
-      console.log(x);
+  remove(event,id: number) {
+    event.stopPropagation();
+    this.service.remove(id).subscribe(res => {
+     this.doctors = res;
     });
-    this.service.getAllDoctors().subscribe(x => {
-      this.doctors = x;
-    });;
   }
   onSelect(doctor:Doctor){
     this.selectedDoctor = doctor;
