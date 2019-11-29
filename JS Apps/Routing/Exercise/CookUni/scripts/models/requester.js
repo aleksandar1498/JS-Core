@@ -69,7 +69,7 @@ let requester = (() => {
 		partialUpdate,
         remove
     }
-})()
+})();
 
 /*
 <div class="row form-layout p-5">
