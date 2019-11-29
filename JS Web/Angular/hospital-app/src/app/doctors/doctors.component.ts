@@ -26,13 +26,11 @@ export class DoctorsComponent implements OnInit {
   }
 
 
-  remove(id: number) {
-    this.service.remove(id).subscribe(x => {
-      console.log(x);
+  remove(event,id: number) {
+    event.stopPropagation();
+    this.service.remove(id).subscribe(res => {
+     this.doctors = res;
     });
-    this.service.getAllDoctors().subscribe(x => {
-      this.doctors = x;
-    });;
   }
   onSelect(doctor:Doctor){
     this.selectedDoctor = doctor;

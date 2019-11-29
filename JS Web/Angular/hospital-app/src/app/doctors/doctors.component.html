@@ -13,8 +13,8 @@
             <td>{{doctor.name}}</td>
             <td>{{doctor.rating}}</td>
             <td>{{doctor.active}}</td>
-            <td><button (click)="toggleStatus(doctor._id)">Change State</button></td>
-            <td><button (click)="remove(doctor._id)">Remove</button></td>
+            <td><button (click)="toggleStatus($event,doctor._id)">Change State</button></td>
+            <td><button (click)="remove($event,doctor._id)">Remove</button></td>
         </tr>
         
     </tbody>
