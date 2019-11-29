@@ -18,7 +18,7 @@ let auth = (() => {
             username,
             password
         };
-
+		
         return requester.post('user', 'login', 'basic', userData);
     }
 
@@ -40,9 +40,12 @@ let auth = (() => {
         let logoutData = {
             authtoken: sessionStorage.getItem('authtoken')
         };
-		console.log(logoutData);
+		sessionStorage.removeItem('userId');
+		sessionStorage.removeItem('firstName');
 		sessionStorage.removeItem('authtoken');
-		console.log(logoutData);
+		sessionStorage.removeItem('username');
+		sessionStorage.removeItem('lastName');
+		
         return requester.post('user', '_logout', 'kinvey', logoutData);
     }
 
