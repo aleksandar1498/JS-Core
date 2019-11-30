@@ -12,6 +12,11 @@ $(() => {
 		
 		this.get('#/login',HANDLERS.loginGet);	
 		this.post('#/login',HANDLERS.loginPost);	
+
+		this.get('#/details/:id',HANDLERS.showMoreGet);
+		this.get('#/join/:id',HANDLERS.joinEventGet);
+
+		this.get('#/create',HANDLERS.organizeEventGet);
 	});
 	app.run("index.html#/");
 });
@@ -22,14 +27,20 @@ function getPartials(){
 		'footer' : '../templates/common/footer.hbs'
 	}
 }
-HANDLERS.showHome = function(){
+HANDLERS.showHome = async function(){
 	this.loggedIn = storage.isAuth();
+	this.username = sessionStorage.getItem('username');
 	let partials = getPartials();
+	
 	partials['guestHome'] = '../templates/home/guestHome.hbs';
-	partials['eventDetails'] = '../templates/home/eventDetails.hbs';
+	partials['eventTemplate'] = '../templates/home/eventTemplate.hbs';
 	partials['noEvent'] = '../templates/home/noEvent.hbs';
+	if(this.loggedIn){
+		this.events = await requester.get('appdata','events','kinvey');
+		console.log(this.events);
+	}
 	this.loadPartials(partials)
-	.partial('../templates/home/home.hbs');
+		.partial('../templates/home/home.hbs');
 }
 HANDLERS.registerGet = function(){
 	let partials = getPartials();
@@ -115,3 +126,46 @@ HANDLERS.loginPost = function(ctx){
 	});
 	
 }
+HANDLERS.showMoreGet =async function(ctx){
+	ctx.id = ctx.params.id;
+	ctx.loggedIn = storage.isAuth();
+	ctx.username = sessionStorage.getItem('username');
+	ctx.eventInfo = await requester.get('appdata','events/'+ctx.id,'kinvey');
+	ctx.isAuthor = sessionStorage.getItem('userId') == ctx.eventInfo.organizer;
+	ctx.loadPartials(getPartials())
+	.then(function(){
+		this.partial('../templates/event/details.hbs');
+	});
+}
+
+HANDLERS.joinEventGet =async function(ctx){
+	let id = ctx.params.id;
+	let eventInfo = await requester.get('appdata','events/'+id,'kinvey');
+	eventInfo.people = Number(eventInfo.people)+1;
+	requester
+	.update('appdata','events/'+id,'kinvey',eventInfo)
+	.then(res => {
+	
+		if(!res.ok){
+			throw new Error(res.statusText);
+		}
+		showInfo("You joined the event , congrats!");
+		ctx.redirect('#/details/'+id);
+	})
+	.catch(err =>{
+		console.log(err);
+		showError("Something went wrong");
+	})
+}
+
+HANDLERS.organizeEventGet = function(){
+	let partials = getPartials();
+	this.loggedIn = storage.isAuth();
+	this.username = sessionStorage.getItem('username');
+	partials['organizeForm'] = '../templates/event/organizeForm.hbs';
+	this.loadPartials(partials)
+	.then(function(){
+		this.partial('../templates/event/organizeEventPage.hbs')
+	})
+}
+
