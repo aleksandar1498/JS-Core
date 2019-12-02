@@ -1,6 +1,10 @@
 {{>header}}
 {{#if loggedIn}}
+	{{#each events}}
+		{{>eventTemplate}}
+	{{else}}
 		{{>noEvent}}
+	{{/each}}
 {{else}}
 	{{>guestHome}}
 {{/if}}
