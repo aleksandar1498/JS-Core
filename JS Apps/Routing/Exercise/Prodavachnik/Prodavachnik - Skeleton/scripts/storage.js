@@ -1,19 +1,19 @@
 let storage = (()=>{
-	function saveData(key,appKey, value) {
-		localStorage.setItem(key+appKey, JSON.stringify(value));
+	function saveData(key, value) {
+		sessionStorage.setItem(key, value);
 	}
 
-	function getData(key,appKey){
-	  return localStorage.getItem(key+appKey);
+	function getData(key){
+	  return sessionStorage.getItem(key);
 	}
 
 	function saveUser(data){
-	  saveData("userInfo",data);
-	  saveData("authToken", data._kmd.authtoken);
+	  saveData("userId",data._id);
+	  saveData("authtoken", data._kmd.authtoken);
 	}
 
 	function removeUser(){
-	  localStorage.clear();
+	  sessionStorage.clear();
 	}
 
 	function isAuth(){

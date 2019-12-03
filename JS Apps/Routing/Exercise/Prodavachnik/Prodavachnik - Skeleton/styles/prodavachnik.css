@@ -104,13 +104,13 @@ input:focus{
     border-color: #00bbbb;
 }
 
-input[type=button]{
+button{
     border: 1px solid white;
     padding: 10px 25px;
     transition: all .2s ease-in-out;
 }
 
-input[type=button]:hover{
+button:hover{
     background: #00bbbb;
     border-color: #00bbbb;
     transform: scale(1.1);

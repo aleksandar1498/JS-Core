@@ -25,12 +25,10 @@ const logout = function logout(){
         let logoutData = {
             authtoken: sessionStorage.getItem('authtoken')
         };
-		storage.removeUser();
+		console.log(logoutData);
 		
         return requester.post('user', '_logout', 'kinvey', logoutData);
     }
-
-
 
 const handleError = function handleError(reason) {
         if(!reason.ok){

@@ -1,6 +1,6 @@
 
 const showInfo = function showInfo(message) {
-        let infoBox = $('#successBox');
+        let infoBox = $('#infoBox');
         infoBox.html(message);
         infoBox.show();
         setTimeout(() => infoBox.fadeOut(), 5000);
@@ -12,14 +12,14 @@ const showError = function showError(message) {
         errorBox.show();
         setTimeout(() => errorBox.fadeOut(), 5000);
     }
-const loadingBox = function showError(message) {
+const loadingBox = (function showLoading() {
         let loadingBox = $('#loadingBox');
         return {
 			show : function(){
-				loadingBox.show();
+				$('#loadingBox').show();
 			},
 			hide : function(){
-				loadingBox.hide();
+				$('#loadingBox').hide();
 			}
 		}
-    }
+		})();
