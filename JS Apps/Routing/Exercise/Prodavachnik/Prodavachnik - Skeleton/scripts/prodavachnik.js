@@ -17,6 +17,11 @@ $(() => {
 		
 		this.get("#/create",HANDLERS.createGet);
 		this.post("#/create",HANDLERS.createPost);
+		
+		this.get("#/delete/:id",HANDLERS.removeGet);
+		
+		this.get("#/edit/:id",HANDLERS.editGet);
+		this.post("#/edit/:id",HANDLERS.editPost);
 	});
 	
 	app.run();
@@ -36,15 +41,18 @@ HANDLERS.home = function(){
 		}
 		
 HANDLERS.listAdsGet =async function(){
+	loadingBox.show();
 			this.loggedIn = storage.isAuth();
 			this.ads = await requester.get("appdata","store",'kinvey');
+			this.ads.map(x => {
+				x.isAuthor = x.publisher == storage.getData("userId");
+			});
 			this.hasAds = this.ads.length > 0;
-			console.log(this.hasAds);
-			console.log(this.ads);
 			this.loadPartials({
 				'header':'../templates/common/header.hbs',
 				'footer':'../templates/common/footer.hbs'
 			}).then(function(){
+				loadingBox.hide();
 				this.partial('../templates/ads/viewAds.hbs');
 			});
 		}
@@ -113,12 +121,14 @@ HANDLERS.registerPost= function(){
 			console.log("POST");
 		}
 HANDLERS.createGet= function(){
+	
 	this.loggedIn = storage.isAuth();
 	this.loadPartials({
 				'header':'../templates/common/header.hbs',
 				'adsForm': '../templates/ads/createAdsForm.hbs',
 				'footer':'../templates/common/footer.hbs'
 			}).then(function(){
+				
 				this.partial('../templates/ads/createAdsPage.hbs');
 			});
 		}
@@ -135,11 +145,67 @@ HANDLERS.createPost= function(ctx){
 			throw new Error(res.statusText);
 		}
 		showInfo("Created");
-		ctx.redirect('#/');
+		ctx.redirect('#/ads');
 	}).catch(err => {
 		showError(err);
 	});
 }
+
+HANDLERS.removeGet = function(ctx){
+	let id = ctx.params.id;
+	
+	loadingBox.show();
+	
+	requester
+	.remove('appdata','store/'+id,'kinvey')
+	.then(res => {
+		loadingBox.hide();
+		if(!res.count){
+			throw new Error("Unable to remove");
+		}
+		showInfo("Deleted");
+		ctx.redirect('#/ads');
+	})
+	.catch(err => {
+		showError(err);
+	});
+}
+
+HANDLERS.editGet = async function(ctx){
+	loadingBox.show();
+	let id = ctx.params.id;
+	this.adward =await requester.get("appdata","store/"+id,'kinvey');
+	console.log(this.adward);
+	this.loggedIn = storage.isAuth();
+	
+	this.loadPartials({
+				'header':'../templates/common/header.hbs',
+				'footer':'../templates/common/footer.hbs'
+	}).then(function(){
+		loadingBox.hide();
+		this.partial('../templates/ads/editAds.hbs');
+	});
+ }
+ 
+ HANDLERS.editPost = async function(ctx){
+	let adward = ctx.params;
+	
+	requester
+	.update('appdata','/store/'+adward.id,'kinvey',adward)
+	.then(res =>{
+		loadingBox.hide();
+		console.log(res);
+		if(!res.ok){
+			throw new Error(res.statusText);
+		}
+		showInfo("Updated");
+		ctx.redirect('#/ads');
+	}).catch(err => {
+		showError(err);
+	});
+ }
+	
+
 
 		
 		

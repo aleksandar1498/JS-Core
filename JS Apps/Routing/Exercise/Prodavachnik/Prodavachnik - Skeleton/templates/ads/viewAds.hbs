@@ -20,8 +20,14 @@
 						<td>{{price}}</td>
 						<td>{{datePublishing}}</td>
 						<td>
-							<a href="#">[Delete]</a>
-							<a href="#">[Edit]</a>
+						
+							{{#if isAuthor}}
+								<a href="#/delete/{{_id}}">[Delete]</a>
+								<a href="#/edit/{{_id}}">[Edit]</a>
+							{{else}}
+								<a href="#/details/{{_id}}">[Show More]</a>
+							{{/if}}
+							
 						</td>
 					</tr>
 					{{/each}}
