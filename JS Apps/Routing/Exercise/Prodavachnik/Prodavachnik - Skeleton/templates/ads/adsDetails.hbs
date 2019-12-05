@@ -1,0 +1,10 @@
+<h2>{{adward.title}}</h2>
+<img src='{{adward.imageProduct}}'/>
+<p><b>Publisher : </b>{{adward.publisher}}</p>
+<p><b>Description : </b>{{adward.description}}</p>
+<p><b>Price : </b>{{adward.price}} лв </p>
+<p><b>Date Publishing : </b>{{adward.datePublishing}}</p>
+<h5>Likes {{adward.likes}}</h5>
+{{#if isClient}}
+	<button><a href='#/like/{{adward._id}}'>Like   </a></button>
+{{/if}}

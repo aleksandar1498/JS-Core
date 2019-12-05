@@ -22,6 +22,10 @@ $(() => {
 		
 		this.get("#/edit/:id",HANDLERS.editGet);
 		this.post("#/edit/:id",HANDLERS.editPost);
+		
+		this.get('#/details/:id',HANDLERS.adsDetailsGet);
+		
+		this.get('#/like/:id',HANDLERS.adsLike);
 	});
 	
 	app.run();
@@ -137,6 +141,7 @@ HANDLERS.createPost= function(ctx){
 	let adward = ctx.params;
 	adward['publisher'] = storage.getData("userId");
 	adward['datePublishing'] = Date(Date.now());
+	adward['likes'] = 0;
 	requester
 	.post('appdata','store','kinvey',adward)
 	.then(res =>{
@@ -187,11 +192,11 @@ HANDLERS.editGet = async function(ctx){
 	});
  }
  
- HANDLERS.editPost = async function(ctx){
+ HANDLERS.editPost = function(ctx){
 	let adward = ctx.params;
-	
+			
 	requester
-	.update('appdata','/store/'+adward.id,'kinvey',adward)
+	.update('appdata','store/'+adward.id,'kinvey',adward)
 	.then(res =>{
 		loadingBox.hide();
 		console.log(res);
@@ -201,11 +206,43 @@ HANDLERS.editGet = async function(ctx){
 		showInfo("Updated");
 		ctx.redirect('#/ads');
 	}).catch(err => {
+		
 		showError(err);
 	});
+	
  }
 	
 
+HANDLERS.adsDetailsGet =async function(ctx){
+	this.adward = await requester.get('appdata','store/'+ctx.params.id,'kinvey');
+	this.isClient = this.adward.publisher != storage.getData('userId');
+	this.loggedIn = storage.isAuth();
+	this.loadPartials({
+				'header':'../templates/common/header.hbs',
+				'adsDetails': '../templates/ads/adsDetails.hbs',
+				'footer':'../templates/common/footer.hbs'
+	}).then(function(){
+		this.partial('../templates/ads/adsDetailsPage.hbs');
+	});
+}
 
+HANDLERS.adsLike =async function(ctx){
+	adward = await requester.get('appdata','store/'+ctx.params.id,'kinvey');
+	adward.likes = +adward.likes+1;
+	requester
+	.update('appdata','store/'+adward.id,'kinvey',adward)
+	.then(res =>{
+		loadingBox.hide();
+		console.log(res);
+		if(!res.ok){
+			throw new Error(res.statusText);
+		}
+		showInfo("Liked");
+		ctx.redirect('#/details/'+adward.id);
+	}).catch(err => {
+		
+		showError(err);
+	});
+}
 		
 		

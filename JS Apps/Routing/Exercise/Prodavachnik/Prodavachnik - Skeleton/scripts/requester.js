@@ -48,6 +48,7 @@ let requester = (() => {
     function update (module, endpoint, auth, data) {
         const url = kinveyBaseUrl + module + '/' + kinveyAppKey + '/' + endpoint;
 		let header = makeHeader('PUT', module, endpoint, auth,data);
+	
         return fetch(url,header);
     }
 	// Function to return PUT promise
