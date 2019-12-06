@@ -1,0 +1,50 @@
+{{>header}}
+<table style="margin: 0 auto; margin-top:5%; margin-bottom: 5%; width: 95%;" class="table table-hover">
+	<thead>
+		<tr class="bg-warning">
+			<th>
+				#
+			</th>
+			<th>
+				Name
+			</th>
+			<th>
+				Description
+			</th>
+			<th>
+				Price
+			</th>
+			<th>
+				Details
+			</th>
+			<th>
+				Actions
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each offers}}
+				<tr>
+					<td class="">{{@index}}</td>
+					<td class="">{{product}}</td>
+					<td class="description">{{description}}</td>
+					<td class="">{{price}}</td>
+					<td>
+						<a href='#/offers/{{_id}}' class="btn-primary btn">Order details</a>
+					</td>
+					<td>
+						{{#if isAuthor}}
+							<a href='#/delete/{{_id}}' class="btn-danger btn">Delete</a>
+							<a href='#/edit/{{_id}}' class="btn-info btn">Edit</a>
+						{{else}}
+						<!--BONUS (Not-Required)--><a href="#/buy/{{_id}}" class="btn-warning btn">Buy</a><!--BONUS (Not-Required)-->
+						{{/if}}
+					</td>
+				</tr>
+				
+		{{else}}
+			<tr><td colspan="6" style="text-align:center"> There are not available offers. We are sorry ! </td></tr>
+		{{/each}}
+	</tbody>
+</table>
+{{>footer}}
