@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand" routerLink="/home">Home</a>
+  <ul class="navbar-nav">
+   <ng-container *ngIf="!logged; else showMenu">
+	 <li  class="nav-item">
+      <a class="nav-link" routerLink="/login">Login</a>
+    </li>
+	<li  class="nav-item">
+      <a class="nav-link" routerLink="/register">Register</a>
+    </li>
+	</ng-container>
+	<ng-template #showMenu>
+		<li class="nav-item">
+		  <a class="nav-link" routerLink="/records">Records</a>
+		</li>
+		<li  class="nav-item">
+		  <a class="nav-link" routerLink="/patients">Patients</a>
+		</li>
+		<li  class="nav-item">
+		  <a class="nav-link" routerLink="/doctors">Doctors</a>
+		</li>
+	</ng-template>
+   
+	
+  </ul>
+</nav>
