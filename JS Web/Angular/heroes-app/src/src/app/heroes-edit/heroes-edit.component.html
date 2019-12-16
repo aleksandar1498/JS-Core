@@ -1,0 +1,18 @@
+
+
+<div class="container">
+    <h1>{{hero.name | uppercase}} DETAILS:</h1>
+    <form #heroForm="ngForm" (submit)="edit(hero)">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input  type="text" class="form-control" id="id" [(ngModel)]="hero.id" name="id" disabled />
+      </div>
+       <div class="form-group">
+        <label for="name">Name</label>
+        <input #name="ngModel" type="text" class="form-control" id="name" [(ngModel)]="hero.name" name="name" required />
+        <p [hidden]="name.value.length > 5 || name.pristine" style="color:red">Invalid name,please check!</p>
+      </div>
+      <button type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+</div>

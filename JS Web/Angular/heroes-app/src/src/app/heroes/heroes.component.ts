@@ -1,22 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import {Hero} from '../hero';
-@Component({
+import { HeroesService } from '../heroes.service';
+import {RouterLink} from '@angular/router';
+
+@Component({ 
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  hero :Hero;
-  constructor() { 
-    
+  heroes:Hero[];
+  constructor(private service:HeroesService) { 
+   
   }
 
   ngOnInit() {
-  this.hero = new Hero(14,"Aleksandar");
+    this.heroes = this.service.getHeroes();
   }
 
-  edit(hero){
-    this.hero = hero;
-  }
+  
 
 }
