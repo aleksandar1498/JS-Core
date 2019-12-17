@@ -1,0 +1,10 @@
+#recs-table{
+	width:50%;
+	margin:0 auto;
+}
+
+#recs-table {
+  position: relative;
+  max-height: 200px;
+  overflow: auto;
+}

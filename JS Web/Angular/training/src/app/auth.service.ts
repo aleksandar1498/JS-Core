@@ -5,7 +5,7 @@ import {StorageService} from './storage.service';
   providedIn: 'root'
 })
 export class AuthService {
-
+  
   constructor(private storage:StorageService) { }
   
   isAuth(){

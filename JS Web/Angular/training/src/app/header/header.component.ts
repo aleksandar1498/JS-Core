@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {StorageService} from '../storage.service';
 import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -8,7 +9,7 @@ import {AuthService} from '../auth.service';
 })
 export class HeaderComponent implements OnInit {
   logged:boolean;
-  constructor(private storage:StorageService,private auth:AuthService) { }
+  constructor(private storage:StorageService,private auth:AuthService,private router:Router) { }
 
     ngOnInit() {
 	  this.logged =	this.auth.isAuth()
@@ -16,7 +17,8 @@ export class HeaderComponent implements OnInit {
 	logout(){
 		console.log("logging out");
 	  this.auth.logout();
-	  this.logged =	this.auth.isAuth()
 	  console.log(this.logged);
+	  this.logged =	this.auth.isAuth()
+	  this.router.navigate(['/home']);
 	}
 }
