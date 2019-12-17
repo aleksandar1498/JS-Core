@@ -9,6 +9,11 @@ import { HeaderComponent } from './header/header.component';
 import { RecordsComponent } from './records/records.component';
 import { RecordsDetailsComponent } from './records-details/records-details.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RegisterComponent } from './register/register.component';
+import { FormsModule } from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { LoginComponent } from './login/login.component';
+import { CustomMaterialModule } from './core/material.module';
 
 @NgModule({
   declarations: [
@@ -18,11 +23,16 @@ import { ProfileComponent } from './profile/profile.component';
     HeaderComponent,
     RecordsComponent,
     RecordsDetailsComponent,
-    ProfileComponent
+    ProfileComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+	CustomMaterialModule,
+	BrowserAnimationsModule,
+	FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
