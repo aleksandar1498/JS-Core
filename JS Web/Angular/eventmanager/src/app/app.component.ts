@@ -13,7 +13,7 @@ import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 })
 export class AppComponent {
 
-  @ViewChild('calendar') 
+  @ViewChild('calendar',{'static':false}) 
   calendarComponent: FullCalendarComponent; // the #calendar in the template
 
   calendarVisible = true;

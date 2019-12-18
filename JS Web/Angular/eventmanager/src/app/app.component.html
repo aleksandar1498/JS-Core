@@ -1,11 +1,11 @@
+<div>
+<mat-form-field>
+  <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+</div>
 <div class='app'>
-
-  <div class='app-top'>
-    <button (click)='toggleVisible()'>toggle visible</button>
-    <button (click)='toggleWeekends()'>toggle weekends</button>
-    <button (click)='gotoPast()'>go to a date in the past</button>
-    (also, click a date/time to add an event)
-  </div>
   <div *ngIf="calendarVisible">
   <div class='app-calendar'>
     <full-calendar
@@ -32,7 +32,4 @@
   </div>
   
   </div>
-  
-
-</div>
-<router-outlet></router-outlet>
+ </div>
