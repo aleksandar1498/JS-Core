@@ -6,22 +6,33 @@
     <button (click)='gotoPast()'>go to a date in the past</button>
     (also, click a date/time to add an event)
   </div>
-
-  <div class='app-calendar' *ngIf="calendarVisible">
+  <div *ngIf="calendarVisible">
+  <div class='app-calendar'>
     <full-calendar
       #calendar
-      defaultView="dayGridMonth"
+      defaultView="timeGridWeek"
+	  timeZone="UTC"
       [header]="{
-        left: 'prev,next today',
+        left: 'prev,next,today',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
       }"
+	  [slotDuration]= "'00:30:00'"
+	  [defaultTimedEventDuration]="'00:30:00'"
+	  [eventTimeFormat]="{
+		hour: '2-digit',
+		minute: '2-digit',
+		hour12: false
+	   }"
       [plugins]="calendarPlugins"
       [weekends]="calendarWeekends"
       [events]="calendarEvents"
       (dateClick)="handleDateClick($event)"
     ></full-calendar>
   </div>
+  
+  </div>
+  
 
 </div>
 <router-outlet></router-outlet>
