@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { EventInput } from '@fullcalendar/core';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
-
+import * as moment from 'moment';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 
 @Component({
@@ -29,7 +30,11 @@ export class AppComponent {
   toggleWeekends() {
     this.calendarWeekends = !this.calendarWeekends;
   }
-
+	setDate(private evt: MatDatepickerInputEvent<Date>) {
+		let moments = moment(evt.value);
+	    let calendarApi = this.calendarComponent.getApi();
+	    calendarApi.gotoDate(moments.format("YYYY-MM-DD")); // call a method on the Calendar object*/
+	}
   gotoPast() {
     let calendarApi = this.calendarComponent.getApi();
     calendarApi.gotoDate('2019-02-13'); // call a method on the Calendar object
