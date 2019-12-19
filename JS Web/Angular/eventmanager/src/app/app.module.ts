@@ -8,9 +8,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CustomMaterialModule } from './core/material.module';
 import {AppComponent} from './app.component';
+import { EventDialogComponent } from './event-dialog/event-dialog.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EventDialogComponent
   ],
   imports: [
   AppRoutingModule,
