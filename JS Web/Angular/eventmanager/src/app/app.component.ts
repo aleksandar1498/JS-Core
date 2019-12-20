@@ -45,7 +45,7 @@ export class AppComponent implements OnInit{
 	}
  
   handleDateClick(arg):void {
-if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
+/*if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
       this.calendarEvents = this.calendarEvents.concat({ // add new event data. must create new array
 		doctorId:'102',
         title: 'New Event',
@@ -53,11 +53,19 @@ if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
 		end:arg.date,
         allDay: false,
       })
-    }
-	  /*const dialogRef = this.dialog.open(EventDialogComponent, {
-      data: {id: "Alex"},
+    }*/
+	let now = moment(arg.date);
+	
+	let data = {id:"alex",start : arg.date , durations : []};
+	durations.push({
+		'15' : now.add(15, "minutes").local().format(),
+		'30' : now.add(30, "minutes").local().format(),
+		'45' : now.add(45, "minutes").local().format()
+	});
+	  const dialogRef = this.dialog.open(EventDialogComponent, {
+      data,
 	    width: '550px'
-    });*/
+    });
   }
 
 }

@@ -1,7 +1,12 @@
 <h1 mat-dialog-title>Make appointment </h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.id">
+   <mat-label>End Appointment</mat-label>
+  <mat-select>
+ <mat-option *ngFor="let duration of data.durations" >
+     
+    </mat-option>
+  </mat-select>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
