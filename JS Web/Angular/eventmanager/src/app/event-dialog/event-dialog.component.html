@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Hi </h1>
+<h1 mat-dialog-title>Make appointment </h1>
 <div mat-dialog-content>
   <mat-form-field>
     <input matInput [(ngModel)]="data.id">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <!--<button mat-button [mat-dialog-close]="data.id" cdkFocusInitial>Ok</button>-->
+  <button mat-button (click)="onNoClick()">Exit</button>
+  <button mat-button [mat-dialog-close]="data.id" cdkFocusInitial>Create Appointment</button>
 </div>

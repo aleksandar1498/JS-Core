@@ -9,13 +9,15 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { CustomMaterialModule } from './core/material.module';
 import {AppComponent} from './app.component';
 import { EventDialogComponent } from './event-dialog/event-dialog.component';
+import { MakeAppointmentComponent } from './make-appointment/make-appointment.component';
 @NgModule({
   declarations: [
     AppComponent,
-    EventDialogComponent
+    EventDialogComponent,
+    MakeAppointmentComponent
   ],
   imports: [
-  AppRoutingModule,
+	AppRoutingModule,
     BrowserModule,
 	HttpClientModule,
 	FormsModule,
@@ -23,9 +25,9 @@ import { EventDialogComponent } from './event-dialog/event-dialog.component';
 	BrowserAnimationsModule,
 	FullCalendarModule,
 	CustomMaterialModule
-	
-  ],
+	],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [EventDialogComponent]
 })
 export class AppModule { }
