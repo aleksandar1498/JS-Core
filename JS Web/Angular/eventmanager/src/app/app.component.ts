@@ -32,6 +32,7 @@ export class AppComponent implements OnInit{
 	  
   }
 	ngOnInit(){
+    
 		this.calendarService.getEvents().subscribe(data => {
 			console.log(data);
 			this.calendarEvents = data;
@@ -45,27 +46,37 @@ export class AppComponent implements OnInit{
 	}
  
   handleDateClick(arg):void {
-/*if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
+    
+    console.log(this.calendarComponent.slotDuration);
+if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
       this.calendarEvents = this.calendarEvents.concat({ // add new event data. must create new array
 		doctorId:'102',
         title: 'New Event',
+        overlap : false,
         start: arg.date,
 		end:arg.date,
         allDay: false,
       })
-    }*/
-	let now = moment(arg.date);
+    }
+/*	let now = moment(arg.date);
 	
-	let data = {id:"alex",start : arg.date , durations : []};
-	durations.push({
-		'15' : now.add(15, "minutes").local().format(),
-		'30' : now.add(30, "minutes").local().format(),
-		'45' : now.add(45, "minutes").local().format()
-	});
+  let data = {id:"alex",start : arg.date , durations : {},keys : []};
+  
+  data.durations = {	
+    '15' : now.add(15, "minutes").local().format(),	
+    '30' : now.add(30, "minutes").local().format(),	
+    '45' : now.add(45, "minutes").local().format()
+  };
+  data.keys = Object.keys(data.durations);
 	  const dialogRef = this.dialog.open(EventDialogComponent, {
       data,
 	    width: '550px'
-    });
+    });*/
+  }
+
+  btnClick(arg){
+    this.calendarComponent.slotDuration = '00:10:00';
+ 
   }
 
 }

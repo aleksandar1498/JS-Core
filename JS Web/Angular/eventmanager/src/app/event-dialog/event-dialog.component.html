@@ -1,12 +1,12 @@
-<h1 mat-dialog-title>Make appointment </h1>
+<h1 mat-dialog-title>Appointment for {{data.start | date:'medium'}}</h1>
 <div mat-dialog-content>
   <mat-form-field>
-   <mat-label>End Appointment</mat-label>
-  <mat-select>
- <mat-option *ngFor="let duration of data.durations" >
-     
-    </mat-option>
-  </mat-select>
+    <mat-label>Duration of appointment</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let key of data.keys" [value]="data.durations[key]">
+        {{key}} minutes : to {{data.durations[key] | date:'shortTime'}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

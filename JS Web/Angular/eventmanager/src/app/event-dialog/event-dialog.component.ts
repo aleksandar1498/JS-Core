@@ -12,7 +12,8 @@ export class EventDialogComponent implements OnInit{
  
   constructor(public dialogRef: MatDialogRef<EventDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-		console.log(this.data);
+    console.log(this.data);
+    console.log(this.data.keys);
 	}
 
   onNoClick(): void {
