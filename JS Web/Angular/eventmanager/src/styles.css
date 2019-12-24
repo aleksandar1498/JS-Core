@@ -6,5 +6,9 @@
 @import '~@fullcalendar/timegrid/main.css';
 
 .fc-slats tr:nth-child(odd){
-	background-color:#80808042;
+	/*background-color:#80808042;*/
+}
+
+.fc-nonbusiness {
+	/*pointer-events: none;*/
 }

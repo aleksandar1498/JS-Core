@@ -1,13 +1,13 @@
 <div>
-<mat-form-field>
-  <input #refd matInput [matDatepicker]="picker" (dateChange)="setDate(refd)"placeholder="Choose a date">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
- 
-</mat-form-field>
-<mat-form-field>
-   <input matInput placeholder="Create Appointment" (click)="handleDateClick($event)"/>
-</mat-form-field>
+  <mat-form-field>
+    <input #refd matInput [matDatepicker]="picker" (dateChange)="setDate(refd)" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Create Appointment" (click)="handleDateClick($event)" />
+  </mat-form-field>
 
   <button (click)="btnClick($event)">Click me</button>
 
@@ -15,28 +15,20 @@
 
 <div class='app'>
   <div *ngIf="calendarVisible">
-  <div class='app-calendar'>
-    <full-calendar
-      #calendar
-      defaultView="timeGridWeek"
-      eventOverlap="false"
-      [header]="{
+    <div class='app-calendar'>
+      <full-calendar #calendar defaultView="timeGridWeek" eventOverlap="false" [header]="{
         left: 'prev,next,today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
-      }"
-	  [slotDuration]= "'00:15:00'"
-	  [eventTimeFormat]="{
+      }" [slotDuration]="'00:15:00'" 
+      [locale]= "'bgr'"
+      [eventTimeFormat]="{
 		hour: '2-digit',
 		minute: '2-digit',
 		hour12: false
-	   }"
-      [plugins]="calendarPlugins"
-      [weekends]="calendarWeekends"
-      [events]="calendarEvents"
-      (dateClick)="handleDateClick($event)"
-    ></full-calendar>
+     }" [plugins]="calendarPlugins" [weekends]="calendarWeekends" [minTime]="'07:30:00'" [maxTime]="'19:30:00'"
+        [events]="calendarEvents" (dateClick)="handleDateClick($event)"></full-calendar>
+    </div>
+
   </div>
-  
-  </div>
- </div>
+</div>
