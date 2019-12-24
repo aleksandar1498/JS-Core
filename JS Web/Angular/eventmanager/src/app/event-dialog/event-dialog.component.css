@@ -10,3 +10,12 @@
     justify-content: center;
     margin-top: 40px;
     }
+.appointment-btns{
+    position: relative;
+}
+.appointment-btns button:first-child{
+    float: left;;
+}
+.appointment-btns button:last-child{
+    float: right;
+}
