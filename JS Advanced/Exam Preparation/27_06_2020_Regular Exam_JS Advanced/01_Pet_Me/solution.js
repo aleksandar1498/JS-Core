@@ -4,12 +4,16 @@ function solve() {
     let formFields = addContainer.getElementsByTagName("input");
 
     addBtn.addEventListener("click", (event) => {
-        addPet(formFields, event)
+        addPet(formFields, event);
+        let newLiItem = Array.from(document.querySelector("#adoption > ul").children)[0];
+        console.log(newLiItem);
+        let insideLiElements = Array.from(newLiItem.children); // [p, span, btn]
+        let [p, span, btn] = insideLiElements; 
+        let [strongName, strongAge, strongKind] = Array.from(p.children); // [apn, span, span]
     });
 
     function addPet(formFields, event) {
         event.preventDefault();
-        //clearForm(formFields);
         const form = {
             name: formFields[0].value,
             age: formFields[1].value === "" ? NaN : Number(formFields[1].value),
